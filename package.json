@@ -1,0 +1,35 @@
+{
+  "name": "macro_tracker",
+  "version": "1.0.0",
+  "description": "calorie and macro tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Macro-Tracker"
+  },
+  "keywords": [
+    "macro-tracker",
+    "macro",
+    "tracker",
+    "calories",
+    "calorie",
+    "counter",
+    "fitness",
+    "weight",
+    "loss",
+    "exercise",
+    "bodybuilding",
+    "vanilla",
+    "js",
+    "html",
+    "html5",
+    "css",
+    "css3",
+    "BEM"
+  ],
+  "author": "Aaron Asuncion",
+  "license": "ISC"
+}
