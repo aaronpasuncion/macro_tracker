@@ -4,7 +4,7 @@
   "description": "calorie and macro tracker",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "sass": "node-sass -w scss/ -o dist/css --recursive"
   },
   "repository": {
     "type": "git",
@@ -31,5 +31,8 @@
     "BEM"
   ],
   "author": "Aaron Asuncion",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "node-sass": "^4.14.1"
+  }
 }

@@ -4,13 +4,127 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Macro Tracker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
+    <h1 class="main-title">CALORIE & MACRO TRACKER</h1>
     <!-- top content -->
     <div class="dashboard">
-      <div class="dashboard__left"></div>
-      <div class="dashboard__right"></div>
+      <div class="dashboard__left">
+        <!-- info section -->
+        <div class="info">
+          <div class="info__box">
+            <h1 class="header">
+              NAME
+            </h1>
+            <div class="info__content">
+              <p class="info__text text">
+                AARON ASUNCION
+              </p>
+            </div>
+          </div>
+          <div class="info__box">
+            <h1 class="header">
+              DATE
+            </h1>
+            <div class="info__content">
+              <p class="info__text text">
+                %TODAY'S DATE%
+              </p>
+            </div>
+          </div>
+          <div class="info__box">
+            <h1 class="header">
+              STATUS
+            </h1>
+            <div class="info__content">
+              <span class="info__status"></span>
+              <p class="info__text text">
+                LOOKING GOOD
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard__right">
+        <!-- total macros form -->
+        <div class="form">
+          <h1 class="header">MACROS</h1>
+          <div class="form__wrapper">
+            <input type="text" class="form__input form__input--fats" />
+            <input type="text" class="form__input form__input--carbs" />
+            <input type="text" class="form__input form__input--protein" />
+            <input type="text" class="form__input form__input--cals" readonly />
+            <button class="form__submit">+</button>
+          </div>
+        </div>
+        <!-- totals section -->
+        <div class="totals">
+          <h1 class="header">TOTALS</h1>
+          <div class="totals__wrapper">
+            <!--  total calories -->
+            <div class="totals__item">
+              <div class="totals__desc">
+                <h2 class="totals__title">CALORIES</h2>
+                <span class="totals__ball"></span>
+                <p class="totals__progress">1200/2000</p>
+              </div>
+              <div class="totals__bars">
+                <div class="totals__bar">
+                  <div class="totals_percentage"></div>
+                  <p class="totals__percent">45%</p>
+                </div>
+              </div>
+            </div>
+            <!-- totals fats -->
+            <div class="totals__item">
+              <div class="totals__desc">
+                <h2 class="totals__title">FATS</h2>
+                <span class="totals__ball"></span>
+                <p class="totals__progress">1200/2000</p>
+              </div>
+              <div class="totals__bars">
+                <div class="totals__bar">
+                  <div class="totals_percentage"></div>
+                  <p class="totals__percent">45%</p>
+                </div>
+              </div>
+            </div>
+            <!-- totals carbs -->
+            <div class="totals__item">
+              <div class="totals__desc">
+                <h2 class="totals__title">CARBS</h2>
+                <span class="totals__ball"></span>
+                <p class="totals__progress">1200/2000</p>
+              </div>
+              <div class="totals__bars">
+                <div class="totals__bar">
+                  <div class="totals_percentage"></div>
+                  <p class="totals__percent">45%</p>
+                </div>
+              </div>
+            </div>
+            <!-- totals proteins -->
+            <div class="totals__item">
+              <div class="totals__desc">
+                <h2 class="totals__title">PROTEIN</h2>
+                <span class="totals__ball"></span>
+                <p class="totals__progress">1200/2000</p>
+              </div>
+              <div class="totals__bars">
+                <div class="totals__bar">
+                  <div class="totals_percentage"></div>
+                  <p class="totals__percent">45%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- bottom content -->
     <div class="food-content">
