@@ -6,13 +6,17 @@ html {
   font-family: "Nunito", sans-serif; }
 
 body {
-  padding: 1rem;
+  margin: 0 auto;
+  width: 90%;
   max-width: 100%;
   background: #fbfbfc; }
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////
  TYPOGRAPHY
 */
+.text {
+  font-weight: bold; }
+
 /*///////////////////////////////////////////////////////////////////////////////////////////////////////// 
 LAYOUT */
 .main-title {
@@ -20,32 +24,290 @@ LAYOUT */
   text-align: center; }
 
 /* TOP CONTENT*/
-.dashboard {
+.dashboard,
+.food-content {
   display: flex;
-  height: 50vh;
+  height: 100%;
   width: 100%; }
 
 .dashboard__left,
-.dashboard__right {
+.dashboard__right,
+.food-content__left,
+.food-content__right {
   height: 100%; }
 
-.dashboard__left {
-  width: 30%; }
+.dashboard__left,
+.food-content__left {
+  width: 25%;
+  margin-right: 2rem; }
 
-.dashboard__right {
-  width: 70%; }
+.dashboard__right,
+.food-content__right {
+  width: 75%;
+  margin-left: 2rem; }
 
 .info__box {
-  margin-bottom: 3rem; }
+  margin-bottom: 2rem;
+  width: 80%; }
 
 .info__content {
-  background: #fff; }
+  background: #fff;
+  border-radius: 1.5625rem;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
+.form__wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2rem;
+  border-radius: 1.5625rem;
+  background: #fff;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
+.totals__wrapper {
+  background: #545454;
+  border-radius: 1.5625rem;
+  color: #fff;
+  padding: 2rem;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
+.totals__item,
+.totals__desc,
+.totals__bars {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.totals__desc,
+.totals__bars {
+  width: 50%; }
+
+.totals__desc .totals__title {
+  width: 40%; }
+
+.totals__desc .totals__ball {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  margin: 0 1rem; }
+
+.totals__desc .totals__progress {
+  opacity: 0.7; }
 
 /* BOTTOM CONTENT */
 .food-content {
-  height: 50vh;
+  margin-top: 5rem;
+  height: 100%;
+  min-height: 50vh;
+  width: 100%; }
+
+.statistics__wrapper {
+  background: #929292;
+  border-radius: 1.5625rem;
   width: 100%;
-  background: lightblue; }
+  padding: 2rem;
+  color: #fff;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
+.statistics__section {
+  display: flex;
+  justify-content: space-between; }
+
+.statistics__category {
+  margin-bottom: 0; }
+
+.statistics__item {
+  margin-top: 0;
+  font-weight: bold; }
+
+.food__wrapper,
+.food__head,
+.food__intro {
+  display: flex; }
+
+.food__wrapper {
+  justify-content: space-between;
+  flex-wrap: wrap; }
+
+.food__item {
+  background: #fff;
+  border-radius: 1.5625rem;
+  width: 30%;
+  height: 100%;
+  margin-bottom: 2rem;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
+.food__item__wrapper {
+  padding: 2rem; }
+
+.food__head,
+.food__intro {
+  align-items: center; }
+
+.food__intro {
+  flex-direction: column;
+  width: 70%; }
+
+.food__title,
+.food__category {
+  margin-bottom: 0; }
+
+.food__cals,
+.food__value {
+  margin-top: 0; }
+
+.food__macro {
+  display: flex;
+  align-items: center; }
+
+.food__info {
+  width: 30%; }
+
+.food__percentage {
+  width: 70%;
+  display: flex; }
+
+.food__theme {
+  text-align: left;
+  margin-right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%; }
 
 /*///////////////////////////////////////////////////////////////////////////////////////////////////////// 
  END LAYOUT */
+/* COMPONENTS */
+.totals__bar,
+.food__bar {
+  width: 100%;
+  height: 1rem;
+  background: #fff;
+  border-radius: 1.5625rem;
+  margin-right: 1rem; }
+
+.food__bar {
+  border: 2px solid #929292; }
+
+.totals__percentage,
+.food__percent {
+  background: #5cf298;
+  height: 1rem;
+  width: 50%;
+  border-radius: 1.5625rem; }
+
+.food__percent {
+  height: 0.75rem; }
+
+.totals__title--cals,
+.totals__total--cals,
+.totals__percent--cals,
+.statistics__item--cals,
+.statistics__value--cals,
+.food__cals {
+  color: #5cf298; }
+
+.totals__title--fats,
+.totals__total--fats,
+.totals__percent--fats,
+.statistics__item--fats,
+.statistics__value--fats,
+.food__percent--fats {
+  color: #fe6262; }
+
+.totals__title--carbs,
+.totals__total--carbs,
+.totals__percent--carbs,
+.statistics__item--carbs,
+.statistics__value--carbs {
+  color: #ffc400; }
+
+.totals__title--protein,
+.totals__total--protein,
+.totals__percent--protein,
+.statistics__item--protein,
+.statistics__value--protein {
+  color: #2eabfe; }
+
+.totals__ball--cals,
+.totals__percentage--cals,
+.food__theme--0 {
+  background: #5cf298; }
+
+.totals__ball--fats,
+.totals__percentage--fats,
+.food__percent--fats,
+.food__theme--1 {
+  background: #fe6262; }
+
+.totals__ball--carbs,
+.totals__percentage--carbs,
+.food__percent--carbs,
+.food__theme--2 {
+  background: #ffc400; }
+
+.totals__ball--protein,
+.totals__percentage--protein,
+.food__percent--protein,
+.food__theme--3 {
+  background: #2eabfe; }
+
+/* FORMS */
+.form__submit {
+  cursor: pointer;
+  color: #46ee00;
+  font-size: 2rem;
+  border-radius: 50%;
+  padding: 0.5rem 1rem;
+  border: 2px solid #46ee00;
+  transition: 0.5s all ease-out; }
+  .form__submit:hover {
+    background: #46ee00;
+    color: #545454; }
+
+.form__input {
+  outline: none;
+  padding: 1rem 0.5rem;
+  border-radius: 1.5625rem;
+  width: 10rem;
+  border: 2px solid;
+  text-align: center;
+  transition: 0.5s all ease-out; }
+
+.form__input:active,
+.form__input:focus {
+  background: #f2f2f2; }
+
+.form__input--cals,
+.form__add--cals {
+  pointer-events: none; }
+
+.form__input--fats,
+.form__add--fats {
+  border-color: #fe6262; }
+
+.form__input--carbs,
+.form__add--carbs {
+  border-color: #ffc400; }
+
+.form__input--protein,
+.form__add--protein {
+  border-color: #2eabfe; }
+
+.form__input--cals,
+.form__add--cals {
+  border: none;
+  color: #5cf298;
+  background: none;
+  font-weight: bold; }
+
+.form__wrapper--dark,
+.form__input--dark,
+.form__submit--dark {
+  background: #545454; }
+
+.form__input--dark {
+  color: #fff; }
+
+.form__input--dark:focus {
+  background: #474747; }

@@ -54,12 +54,29 @@
         <!-- total macros form -->
         <div class="form">
           <h1 class="header">MACROS</h1>
-          <div class="form__wrapper">
-            <input type="text" class="form__input form__input--fats" />
-            <input type="text" class="form__input form__input--carbs" />
-            <input type="text" class="form__input form__input--protein" />
-            <input type="text" class="form__input form__input--cals" readonly />
-            <button class="form__submit">+</button>
+          <div class="form__wrapper form__wrapper--dark">
+            <input
+              type="text"
+              class="form__input form__input--fats form__input--dark"
+              placeholder="TOTALS FATS"
+            />
+            <input
+              type="text"
+              class="form__input form__input--carbs form__input--dark"
+              placeholder="TOTAL CARBS"
+            />
+            <input
+              type="text"
+              class="form__input form__input--protein form__input--dark"
+              placeholder="TOTAL PROTEIN"
+            />
+            <input
+              type="text"
+              class="form__input form__input--cals form__input--dark"
+              readonly
+              value="TOTAL CALORIES"
+            />
+            <button class="form__submit form__submit--dark">+</button>
           </div>
         </div>
         <!-- totals section -->
@@ -69,57 +86,73 @@
             <!--  total calories -->
             <div class="totals__item">
               <div class="totals__desc">
-                <h2 class="totals__title">CALORIES</h2>
-                <span class="totals__ball"></span>
-                <p class="totals__progress">1200/2000</p>
+                <h2 class="totals__title totals__title--cals">CALORIES</h2>
+                <span class="totals__ball totals__ball--cals"></span>
+                <p class="totals__progress">
+                  1200<span class="totals__total--cals">/2000</span>
+                </p>
               </div>
               <div class="totals__bars">
                 <div class="totals__bar">
-                  <div class="totals_percentage"></div>
-                  <p class="totals__percent">45%</p>
+                  <div
+                    class="totals__percentage totals__percentage--calories"
+                  ></div>
                 </div>
+                <p class="totals__percent--cals">45%</p>
               </div>
             </div>
             <!-- totals fats -->
             <div class="totals__item">
               <div class="totals__desc">
-                <h2 class="totals__title">FATS</h2>
-                <span class="totals__ball"></span>
-                <p class="totals__progress">1200/2000</p>
+                <h2 class="totals__title totals__title--fats">FATS</h2>
+                <span class="totals__ball totals__ball--fats"></span>
+                <p class="totals__progress">
+                  1200<span class="totals__total--fats">/2000</span>
+                </p>
               </div>
               <div class="totals__bars">
                 <div class="totals__bar">
-                  <div class="totals_percentage"></div>
-                  <p class="totals__percent">45%</p>
+                  <div
+                    class="totals__percentage totals__percentage--fats"
+                  ></div>
                 </div>
+                <p class="totals__percent--fats">45%</p>
               </div>
             </div>
             <!-- totals carbs -->
             <div class="totals__item">
               <div class="totals__desc">
-                <h2 class="totals__title">CARBS</h2>
-                <span class="totals__ball"></span>
-                <p class="totals__progress">1200/2000</p>
+                <h2 class="totals__title totals__title--carbs">CARBS</h2>
+                <span class="totals__ball totals__ball--carbs"></span>
+                <p class="totals__progress">
+                  1200 <span class="totals__total--carbs">/2000</span>
+                </p>
               </div>
               <div class="totals__bars">
                 <div class="totals__bar">
-                  <div class="totals_percentage"></div>
-                  <p class="totals__percent">45%</p>
+                  <div
+                    class="totals__percentage totals__percentage--carbs"
+                  ></div>
                 </div>
+                <p class="totals__percent--carbs">45%</p>
               </div>
             </div>
             <!-- totals proteins -->
             <div class="totals__item">
               <div class="totals__desc">
-                <h2 class="totals__title">PROTEIN</h2>
-                <span class="totals__ball"></span>
-                <p class="totals__progress">1200/2000</p>
+                <h2 class="totals__title totals__title--protein">PROTEIN</h2>
+                <span class="totals__ball totals__ball--protein"></span>
+                <p class="totals__progress">
+                  1200<span class="totals__total--protein">/2000</span>
+                </p>
               </div>
               <div class="totals__bars">
                 <div class="totals__bar">
-                  <div class="totals_percentage"></div>
-                  <p class="totals__percent">45%</p>
+                  <div
+                    class="totals__percentage totals__percentage--protein"
+                  ></div>
                 </div>
+                <p class="totals__percent--protein">45%</p>
               </div>
             </div>
           </div>
@@ -128,8 +161,364 @@
     </div>
     <!-- bottom content -->
     <div class="food-content">
-      <div class="food-content__left"></div>
-      <div class="food-content__right"></div>
+      <div class="food-content__left">
+        <!-- statistics -->
+        <div class="statistics">
+          <h1 class="header">STATISTICS</h1>
+          <div class="statistics__wrapper">
+            <div class="statistics__section">
+              <div class="statistics__info">
+                <h3 class="statistics__category">HIGHEST CALS</h3>
+                <p class="statistics__item statistics__item--cals">N/A</p>
+              </div>
+              <div class="statistics__box">
+                <h3 class="statistics__value statistics__value--cals">1200</h3>
+              </div>
+            </div>
+            <div class="statistics__section">
+              <div class="statistics__info">
+                <h3 class="statistics__category">HIGHEST FATS</h3>
+                <p class="statistics__item statistics__item--fats">N/A</p>
+              </div>
+              <div class="statistics__box">
+                <h3 class="statistics__value statistics__value--fats">50g</h3>
+              </div>
+            </div>
+            <div class="statistics__section">
+              <div class="statistics__info">
+                <h3 class="statistics__category">HIGHEST CARBS</h3>
+                <p class="statistics__item statistics__item--carbs">N/A</p>
+              </div>
+              <div class="statistics__box">
+                <h3 class="statistics__value statistics__value--carbs">122</h3>
+              </div>
+            </div>
+            <div class="statistics__section">
+              <div class="statistics__info">
+                <h3 class="statistics__category">HIGHEST PROTEIN</h3>
+                <p class="statistics__item statistics__item--protein">N/A</p>
+              </div>
+              <div class="statistics__box">
+                <h3 class="statistics__value statistics__value--protein">81</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="food-content__right">
+        <!-- add food item -->
+        <div class="form add">
+          <h1 class="header">ADD FOOD ITEM</h1>
+          <div class="form__wrapper">
+            <input
+              type="text"
+              class="form__input form__add--fats"
+              placeholder="TOTALS FATS"
+            />
+            <input
+              type="text"
+              class="form__input form__add--carbs"
+              placeholder="TOTAL CARBS"
+            />
+            <input
+              type="text"
+              class="form__input form__add--protein"
+              placeholder="TOTAL PROTEIN"
+            />
+            <input
+              type="text"
+              class="form__input form__add--cals"
+              readonly
+              value="TOTAL CALORIES"
+            />
+            <button class="form__submit">+</button>
+          </div>
+        </div>
+        <!-- FOOD LOG -->
+        <div class="food">
+          <h1 class="header">FOOD LOG</h1>
+          <div class="food__wrapper">
+            <div class="food__item" id="item-0">
+              <div class="food__item__wrapper">
+                <div class="food__head">
+                  <span class="food__theme food__theme--0"></span>
+                  <div class="food__intro">
+                    <h2 class="food__title">FOOD ITEM</h2>
+                    <h3 class="food__cals">400 CALORIES</h3>
+                  </div>
+                </div>
+                <div class="food__content">
+                  <div class="food__macro food__fats">
+                    <div class="food__info">
+                      <h4 class="food__category">FATS</h4>
+                      <p class="food__value">15g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--fats"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__carbs">
+                    <div class="food__info">
+                      <h4 class="food__category">CARBS</h4>
+                      <p class="food__value">45g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--carbs"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__protein">
+                    <div class="food__info">
+                      <h4 class="food__category">PROTEIN</h4>
+                      <p class="food__value">22g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--protein"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="food__item" id="item-0">
+              <div class="food__item__wrapper">
+                <div class="food__head">
+                  <span class="food__theme food__theme--0"></span>
+                  <div class="food__intro">
+                    <h2 class="food__title">FOOD ITEM</h2>
+                    <h3 class="food__cals">400 CALORIES</h3>
+                  </div>
+                </div>
+                <div class="food__content">
+                  <div class="food__macro food__fats">
+                    <div class="food__info">
+                      <h4 class="food__category">FATS</h4>
+                      <p class="food__value">15g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--fats"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__carbs">
+                    <div class="food__info">
+                      <h4 class="food__category">CARBS</h4>
+                      <p class="food__value">45g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--carbs"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__protein">
+                    <div class="food__info">
+                      <h4 class="food__category">PROTEIN</h4>
+                      <p class="food__value">22g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--protein"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="food__item" id="item-0">
+              <div class="food__item__wrapper">
+                <div class="food__head">
+                  <span class="food__theme food__theme--0"></span>
+                  <div class="food__intro">
+                    <h2 class="food__title">FOOD ITEM</h2>
+                    <h3 class="food__cals">400 CALORIES</h3>
+                  </div>
+                </div>
+                <div class="food__content">
+                  <div class="food__macro food__fats">
+                    <div class="food__info">
+                      <h4 class="food__category">FATS</h4>
+                      <p class="food__value">15g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--fats"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__carbs">
+                    <div class="food__info">
+                      <h4 class="food__category">CARBS</h4>
+                      <p class="food__value">45g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--carbs"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__protein">
+                    <div class="food__info">
+                      <h4 class="food__category">PROTEIN</h4>
+                      <p class="food__value">22g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--protein"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="food__item" id="item-0">
+              <div class="food__item__wrapper">
+                <div class="food__head">
+                  <span class="food__theme food__theme--0"></span>
+                  <div class="food__intro">
+                    <h2 class="food__title">FOOD ITEM</h2>
+                    <h3 class="food__cals">400 CALORIES</h3>
+                  </div>
+                </div>
+                <div class="food__content">
+                  <div class="food__macro food__fats">
+                    <div class="food__info">
+                      <h4 class="food__category">FATS</h4>
+                      <p class="food__value">15g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--fats"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__carbs">
+                    <div class="food__info">
+                      <h4 class="food__category">CARBS</h4>
+                      <p class="food__value">45g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--carbs"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__protein">
+                    <div class="food__info">
+                      <h4 class="food__category">PROTEIN</h4>
+                      <p class="food__value">22g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--protein"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="food__item" id="item-0">
+              <div class="food__item__wrapper">
+                <div class="food__head">
+                  <span class="food__theme food__theme--0"></span>
+                  <div class="food__intro">
+                    <h2 class="food__title">FOOD ITEM</h2>
+                    <h3 class="food__cals">400 CALORIES</h3>
+                  </div>
+                </div>
+                <div class="food__content">
+                  <div class="food__macro food__fats">
+                    <div class="food__info">
+                      <h4 class="food__category">FATS</h4>
+                      <p class="food__value">15g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--fats"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__carbs">
+                    <div class="food__info">
+                      <h4 class="food__category">CARBS</h4>
+                      <p class="food__value">45g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--carbs"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__protein">
+                    <div class="food__info">
+                      <h4 class="food__category">PROTEIN</h4>
+                      <p class="food__value">22g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--protein"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="food__item" id="item-0">
+              <div class="food__item__wrapper">
+                <div class="food__head">
+                  <span class="food__theme food__theme--0"></span>
+                  <div class="food__intro">
+                    <h2 class="food__title">FOOD ITEM</h2>
+                    <h3 class="food__cals">400 CALORIES</h3>
+                  </div>
+                </div>
+                <div class="food__content">
+                  <div class="food__macro food__fats">
+                    <div class="food__info">
+                      <h4 class="food__category">FATS</h4>
+                      <p class="food__value">15g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--fats"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__carbs">
+                    <div class="food__info">
+                      <h4 class="food__category" id="food">CARBS</h4>
+                      <p class="food__value">45g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--carbs"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="food__macro food__protein">
+                    <div class="food__info">
+                      <h4 class="food__category">PROTEIN</h4>
+                      <p class="food__value">22g</p>
+                    </div>
+                    <div class="food__percentage">
+                      <div class="food__bar">
+                        <div class="food__percent food__percent--protein"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--  -->
     </div>
 
     <script src="js/main.js"></script>
