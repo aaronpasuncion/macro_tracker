@@ -261,13 +261,11 @@ LAYOUT */
   padding: 0.5rem 1rem;
   border: 2px solid #46ee00;
   transition: 0.5s all ease-out;
-  background: none; }
+  background: none;
+  outline: 0; }
   .form__submit:hover {
     background: #46ee00;
     color: #545454; }
-
-.form__submit:active {
-  pointer-events: none; }
 
 .form__input {
   outline: none;

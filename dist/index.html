@@ -54,7 +54,8 @@
         <!-- total macros form -->
         <div class="form">
           <h1 class="header">MACROS</h1>
-          <div class="form__wrapper form__wrapper--dark">
+          <div class="form__wrapper form__totals form__wrapper--dark">
+            <!-- <h2>CALORIES<p>%calories%</p></h2><h2>FATS:</h2><p>%fats%</p><h2>CARBS:</h2><p>%fats%</p><h2>PROTEIN:</h2><p>%protein%</p> -->
             <input
               type="text"
               class="form__input form__input--fats form__input--dark"
@@ -76,7 +77,10 @@
               readonly
               value="TOTAL CALORIES"
             />
-            <button class="form__submit form__submit--dark" id="totals-submit">
+            <button
+              class="form__submit form-totals__submit form__submit--dark"
+              id="totals-submit"
+            >
               +
             </button>
           </div>
@@ -211,7 +215,7 @@
         <!-- add food item -->
         <div class="form add">
           <h1 class="header">ADD FOOD ITEM</h1>
-          <div class="form__wrapper form__totals">
+          <div class="form__wrapper form__add">
             <input
               type="text"
               class="form__input form__add--food"

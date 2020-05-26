@@ -325,15 +325,13 @@ LAYOUT */
   border: 2px solid $green;
   transition: 0.5s all ease-out;
   background: none;
+  outline: 0;
   &:hover {
     background: $green;
     color: $dark-bg;
   }
 }
 
-.form__submit:active {
-  pointer-events: none;
-}
 .form__input {
   outline: none;
   padding: 1rem 0.5rem;

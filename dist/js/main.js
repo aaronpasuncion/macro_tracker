@@ -1,3 +1,4 @@
+// Food Controller
 var FoodController = (function () {
   var Food = function (id, name, fats, carbs, protein, cals) {
     this.id = id;
@@ -31,7 +32,39 @@ var FoodController = (function () {
       highestProteins: 0,
     },
   };
+
+  var totalCalories = function (obj) {
+    var fatCals, carbCals, proteinCals, totalCals;
+    // 1. Convert each category into its caloric value
+    fatCals = obj.fats * 9;
+    carbCals = obj.carbs * 4;
+    proteinCals = obj.protein * 4;
+    totalCals = fatCals + carbCals + proteinCals;
+    return totalCals;
+  };
+
+  return {
+    setUserMacros: function (obj) {
+      var totalCals;
+      // 1. calculate the total calories first
+      totalCals = totalCalories(obj);
+      console.log(totalCals);
+      data.mainTotals.calories = totalCals;
+      data.mainTotals.fats = obj.fats;
+      data.mainTotals.carbs = obj.carbs;
+      data.mainTotals.proteins = obj.protein;
+    },
+    getTotalMacros: function () {
+      return {
+        calories: data.mainTotals.calories,
+        fats: data.mainTotals.fats,
+        carbs: data.mainTotals.carbs,
+        protein: data.mainTotals.proteins,
+      };
+    },
+  };
 })();
+// UIController
 var UIController = (function () {
   // DOMstring elements
   var DOMstrings = {
@@ -43,7 +76,7 @@ var UIController = (function () {
     inputTotalCarbs: ".form__input--carbs",
     inputTotalProtein: ".form__input--protein",
     inputTotalCals: ".form__input--protein",
-    totalFormSubmit: "#totals-submit",
+    // totalFormSubmit: "form-totals__submit",
     totalFats: ".total__fats",
     totalCarbs: ".total__carbs",
     totalProtein: ".total__protein",
@@ -69,26 +102,70 @@ var UIController = (function () {
   };
 
   return {
-    DOMstrings,
+    getTotalInputs: function () {
+      var inputFats, inputCarbs, inputProtein;
+      inputFats = document.querySelector(DOMstrings.inputTotalFats).value;
+      inputCarbs = document.querySelector(DOMstrings.inputTotalCarbs).value;
+      inputProtein = document.querySelector(DOMstrings.inputTotalProtein).value;
+      return {
+        fats: inputFats,
+        carbs: inputCarbs,
+        protein: inputProtein,
+      };
+    },
+    displayUserMacros: function (obj) {
+      var totalsForm, defaultHTML, displayHTML;
+      totalsForm = document.querySelector(DOMstrings.formTotalsContainer);
+      defaultHTML =
+        "<h2>CALORIES<p>%calories%</p></h2><h2>FATS:</h2><p>%fats%</p><h2>CARBS:</h2><p>%carbs%</p><h2>PROTEIN:</h2><p>%protein%</p>";
+      displayHTML = defaultHTML.replace("%calories%", obj.calories);
+      displayHTML = displayHTML.replace("%fats%", obj.fats);
+      displayHTML = displayHTML.replace("%carbs%", obj.carbs);
+      displayHTML = displayHTML.replace("%protein%", obj.protein);
+      totalsForm.innerHTML = displayHTML;
+    },
+    getDOMstrings: function () {
+      return DOMstrings;
+    },
   };
 })();
+// Controller controller
 var Controller = (function (FoodCtrl, UICtrl) {
-  var DOMobj = UICtrl.DOMstrings;
-  console.log(DOMobj);
   // event listeners stored within this function
   var setupEventListeners = function () {
+    var DOMobj = UICtrl.getDOMstrings();
     document
       .querySelector(DOMobj.formTotalsContainer)
-      .addEventListener("click", function () {
-        alert("clicked");
+      .addEventListener("click", function (e) {
+        var el;
+        el = e.target;
+        if (el.classList.contains("form-totals__submit")) {
+          ctrlStoreTotals();
+        }
       });
   };
   // Calculate User's total Calories/macros
   var ctrlStoreTotals = function () {
+    var obj, error;
+    error = "";
     // 1. Retrieve the users form inputs
+    obj = UICtrl.getTotalInputs();
     // 2. validate these inputs and store them within the data object if valid (use if/else statement here)
-    // 3. Update the Macro Form VIA the UI to change the macro form into display values instead of input elements
-    // 4. initialize TOTALS section, placing the total macros/calories for each section (e.g. 0/2000)
+    for (var i in obj) {
+      if (obj[i] === "" || isNaN(obj[i])) {
+        error = "All fields must be correctly filled (all numeric)";
+      }
+    }
+    if (error === "") {
+      FoodCtrl.setUserMacros(obj);
+    } else {
+      console.log("looking good");
+    }
+    // 3. retrieve the updated object (including the total calories)
+    var userMacros = FoodCtrl.getTotalMacros();
+    // 4. Update the Macro Form VIA the UI to change the macro form into display values instead of input elements
+    UICtrl.displayUserMacros(userMacros);
+    // 5. initialize TOTALS section, placing the total macros/calories for each section (e.g. 0/2000)
   };
   // Add Food Item
   var ctrlAddFood = function () {
