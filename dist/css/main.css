@@ -62,7 +62,7 @@ LAYOUT */
   justify-content: space-evenly;
   padding: 2rem;
   border-radius: 1.5625rem;
-  background: #fff;
+  background: #b3b3b3;
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
 
 .totals__wrapper {
@@ -260,10 +260,14 @@ LAYOUT */
   border-radius: 50%;
   padding: 0.5rem 1rem;
   border: 2px solid #46ee00;
-  transition: 0.5s all ease-out; }
+  transition: 0.5s all ease-out;
+  background: none; }
   .form__submit:hover {
     background: #46ee00;
     color: #545454; }
+
+.form__submit:active {
+  pointer-events: none; }
 
 .form__input {
   outline: none;
@@ -272,11 +276,11 @@ LAYOUT */
   width: 10rem;
   border: 2px solid;
   text-align: center;
-  transition: 0.5s all ease-out; }
+  background: none; }
 
 .form__input:active,
 .form__input:focus {
-  background: #f2f2f2; }
+  background: white; }
 
 .form__input--cals,
 .form__add--cals {
@@ -302,8 +306,7 @@ LAYOUT */
   font-weight: bold; }
 
 .form__wrapper--dark,
-.form__input--dark,
-.form__submit--dark {
+.form__input--dark {
   background: #545454; }
 
 .form__input--dark {

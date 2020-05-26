@@ -22,7 +22,7 @@
               NAME
             </h1>
             <div class="info__content">
-              <p class="info__text text">
+              <p class="info__name text">
                 AARON ASUNCION
               </p>
             </div>
@@ -32,7 +32,7 @@
               DATE
             </h1>
             <div class="info__content">
-              <p class="info__text text">
+              <p class="info__date text">
                 %TODAY'S DATE%
               </p>
             </div>
@@ -42,8 +42,8 @@
               STATUS
             </h1>
             <div class="info__content">
-              <span class="info__status"></span>
-              <p class="info__text text">
+              <span class="info__status-color"></span>
+              <p class="info__status text">
                 LOOKING GOOD
               </p>
             </div>
@@ -76,7 +76,9 @@
               readonly
               value="TOTAL CALORIES"
             />
-            <button class="form__submit form__submit--dark">+</button>
+            <button class="form__submit form__submit--dark" id="totals-submit">
+              +
+            </button>
           </div>
         </div>
         <!-- totals section -->
@@ -106,7 +108,7 @@
               <div class="totals__desc">
                 <h2 class="totals__title totals__title--fats">FATS</h2>
                 <span class="totals__ball totals__ball--fats"></span>
-                <p class="totals__progress">
+                <p class="totals__progress total__fats">
                   1200<span class="totals__total--fats">/2000</span>
                 </p>
               </div>
@@ -124,7 +126,7 @@
               <div class="totals__desc">
                 <h2 class="totals__title totals__title--carbs">CARBS</h2>
                 <span class="totals__ball totals__ball--carbs"></span>
-                <p class="totals__progress">
+                <p class="totals__progress totals__carbs">
                   1200 <span class="totals__total--carbs">/2000</span>
                 </p>
               </div>
@@ -142,7 +144,7 @@
               <div class="totals__desc">
                 <h2 class="totals__title totals__title--protein">PROTEIN</h2>
                 <span class="totals__ball totals__ball--protein"></span>
-                <p class="totals__progress">
+                <p class="totals__progress totals__protein">
                   1200<span class="totals__total--protein">/2000</span>
                 </p>
               </div>
@@ -209,7 +211,12 @@
         <!-- add food item -->
         <div class="form add">
           <h1 class="header">ADD FOOD ITEM</h1>
-          <div class="form__wrapper">
+          <div class="form__wrapper form__totals">
+            <input
+              type="text"
+              class="form__input form__add--food"
+              placeholder="ITEM NAME"
+            />
             <input
               type="text"
               class="form__input form__add--fats"
@@ -231,7 +238,7 @@
               readonly
               value="TOTAL CALORIES"
             />
-            <button class="form__submit">+</button>
+            <button class="form__submit" id="add-submit">+</button>
           </div>
         </div>
         <!-- FOOD LOG -->

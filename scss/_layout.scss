@@ -77,7 +77,7 @@ LAYOUT */
   justify-content: space-evenly;
   padding: $wrapper-padding;
   border-radius: $radius;
-  background: $white;
+  background: darken($white, 30);
   box-shadow: $shadow;
 }
 
@@ -324,10 +324,15 @@ LAYOUT */
   padding: 0.5rem 1rem;
   border: 2px solid $green;
   transition: 0.5s all ease-out;
+  background: none;
   &:hover {
     background: $green;
     color: $dark-bg;
   }
+}
+
+.form__submit:active {
+  pointer-events: none;
 }
 .form__input {
   outline: none;
@@ -336,12 +341,12 @@ LAYOUT */
   width: 10rem;
   border: 2px solid;
   text-align: center;
-  transition: 0.5s all ease-out;
+  background: none;
 }
 
 .form__input:active,
 .form__input:focus {
-  background: darken($white, 5);
+  background: lighten($white, 20);
 }
 
 // form modifiers
@@ -374,8 +379,7 @@ LAYOUT */
 }
 
 .form__wrapper--dark,
-.form__input--dark,
-.form__submit--dark {
+.form__input--dark {
   background: $dark-bg;
 }
 
