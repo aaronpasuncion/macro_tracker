@@ -1,6 +1,16 @@
 // Food Controller
 var FoodController = (function () {
-  var Food = function (id, name, fats, carbs, protein, cals) {
+  var Food = function (
+    id,
+    name,
+    fats,
+    carbs,
+    protein,
+    cals,
+    fatsPercent,
+    carbsPercent,
+    proteinPercent
+  ) {
     this.id = id;
     (this.name = name),
       (this.fats = fats),
@@ -16,20 +26,39 @@ var FoodController = (function () {
       calories: 0,
       fats: 0,
       carbs: 0,
-      proteins: 0,
+      protein: 0,
     },
     currentTotals: {
       calories: 0,
       fats: 0,
       carbs: 0,
-      proteins: 0,
-      foodItems: [],
+      protein: 0,
+      totalPercentages: {
+        caloriesBar: 0,
+        fatsBar: 0,
+        carbsBar: 0,
+        proteinBar: 0,
+      },
     },
+    foodItems: [
+      {
+        calories: 122,
+        fats: 12,
+        carbs: 21,
+        protein: 18,
+      },
+      {
+        calories: 322,
+        fats: 22,
+        carbs: 70,
+        protein: 45,
+      },
+    ],
     statistics: {
       highestCals: 0,
       highestFats: 0,
       highestCarbs: 0,
-      highestProteins: 0,
+      highestprotein: 0,
     },
   };
 
@@ -52,15 +81,52 @@ var FoodController = (function () {
       data.mainTotals.calories = totalCals;
       data.mainTotals.fats = obj.fats;
       data.mainTotals.carbs = obj.carbs;
-      data.mainTotals.proteins = obj.protein;
+      data.mainTotals.protein = obj.protein;
     },
     getTotalMacros: function () {
       return {
         calories: data.mainTotals.calories,
         fats: data.mainTotals.fats,
         carbs: data.mainTotals.carbs,
-        protein: data.mainTotals.proteins,
+        protein: data.mainTotals.protein,
       };
+    },
+    calculateCurrentTotals: function () {
+      var curTotals, foodArr;
+      curTotals = data.currentTotals;
+      foodArr = data.foodItems;
+      foodArr.forEach(function (cur) {
+        curTotals.calories += cur.calories;
+        curTotals.fats += cur.fats;
+        curTotals.carbs += cur.carbs;
+        curTotals.protein += cur.protein;
+      });
+    },
+    getCurrentTotals: function () {
+      return data.currentTotals;
+    },
+    calculateTotalPercentages: function () {
+      var curTotals, mainMacros, percentages;
+      curTotals = data.currentTotals;
+      mainMacros = data.mainTotals;
+      percentages = data.currentTotals.totalPercentages;
+
+      percentages.caloriesBar = Math.round(
+        (curTotals.calories / mainMacros.calories) * 100
+      );
+      percentages.fatsBar = Math.round(
+        (curTotals.fats / mainMacros.fats) * 100
+      );
+      percentages.carbsBar = Math.round(
+        (curTotals.carbs / mainMacros.carbs) * 100
+      );
+      percentages.proteinBar = Math.round(
+        (curTotals.protein / mainMacros.protein) * 100
+      );
+      console.log(percentages);
+    },
+    getCurrentTotals: function () {
+      return data.currentTotals;
     },
   };
 })();
@@ -76,16 +142,28 @@ var UIController = (function () {
     inputTotalCarbs: ".form__input--carbs",
     inputTotalProtein: ".form__input--protein",
     inputTotalCals: ".form__input--protein",
-    // totalFormSubmit: "form-totals__submit",
-    totalFats: ".total__fats",
-    totalCarbs: ".total__carbs",
-    totalProtein: ".total__protein",
-    totalFatsPercentage: ".total__percent--fats",
-    totalCarbsPercentage: ".total__percent--carbs",
-    totalProteinPercentage: ".total__percent--protein",
+    totalSummaryContainer: ".totals__wrapper",
+    // current totals
+    totalCurCals: ".totals__current-cals",
+    totalCurFats: ".totals__current-fats",
+    totalCurCarbs: ".totals__current-carbs",
+    totalCurProtein: ".totals__current-protein",
+    // user macros
+    totalUserCals: ".totals__total--cals",
+    totalUserFats: ".totals__total--fats",
+    totalUserCarbs: ".totals__total--carbs",
+    totalUserProtein: ".totals__total--protein",
+    // total percentage bars
+    totalCalsBar: ".totals__percentage--cals",
     totalFatsBar: ".totals__percentage--fats",
     totalCarbsBar: ".totals__percentage--carbs",
     totalProteinBar: ".totals__percentage--protein",
+    // total percent values
+    totalCalsPercentage: ".totals__percent--cals",
+    totalFatsPercentage: ".totals__percent--fats",
+    totalCarbsPercentage: ".totals__percent--carbs",
+    totalProteinPercentage: ".totals__percent--protein",
+    //
     statCalsValue: ".statistics__value--cals",
     statFatsValue: ".statistics__value--cals",
     statCarbsValue: ".statistics__value--cals",
@@ -100,6 +178,8 @@ var UIController = (function () {
     inputAddCals: ".form__add--protein",
     addFormSubmit: "#add-submit",
   };
+
+  var summaryFractions = function (obj) {};
 
   return {
     getTotalInputs: function () {
@@ -117,12 +197,54 @@ var UIController = (function () {
       var totalsForm, defaultHTML, displayHTML;
       totalsForm = document.querySelector(DOMstrings.formTotalsContainer);
       defaultHTML =
-        "<h2>CALORIES<p>%calories%</p></h2><h2>FATS:</h2><p>%fats%</p><h2>CARBS:</h2><p>%carbs%</p><h2>PROTEIN:</h2><p>%protein%</p>";
+        '<input type="text" class="form__input form__input--fats form__input--dark"  value="FATS: %fats%" readonly/> <input type="text" class="form__input form__input--carbs form__input--dark"  value="CARBS: %carbs%" readonly/> <input type="text" class="form__input form__input--protein form__input--dark" value="PROTEIN: %protein%" readonly/> <input type="text" class="form__input form__input--cals form__input--dark" readonly value="CALORIES: %calories%" /> <button class="form__submit form-totals__submit form__submit--dark" id="totals-submit" > + </button>';
       displayHTML = defaultHTML.replace("%calories%", obj.calories);
       displayHTML = displayHTML.replace("%fats%", obj.fats);
       displayHTML = displayHTML.replace("%carbs%", obj.carbs);
       displayHTML = displayHTML.replace("%protein%", obj.protein);
       totalsForm.innerHTML = displayHTML;
+    },
+    updateTotalTracker: function (obj) {
+      var curTotals, userMacros, container;
+      curTotals = obj.curTotals;
+      userMacros = obj.macros;
+      container = document.querySelector(DOMstrings.totalSummaryContainer);
+      // 1. set the current total for each category
+      document.querySelector(DOMstrings.totalCurCals).textContent =
+        curTotals.calories;
+      document.querySelector(DOMstrings.totalCurFats).textContent =
+        curTotals.fats;
+      document.querySelector(DOMstrings.totalCurCarbs).textContent =
+        curTotals.carbs;
+      document.querySelector(DOMstrings.totalCurProtein).textContent =
+        curTotals.protein;
+      // 2. set the total user Macros
+      document.querySelector(DOMstrings.totalUserCals).textContent =
+        "/" + userMacros.calories;
+      document.querySelector(DOMstrings.totalUserFats).textContent =
+        "/" + userMacros.fats;
+      document.querySelector(DOMstrings.totalUserCarbs).textContent =
+        "/" + userMacros.carbs;
+      document.querySelector(DOMstrings.totalUserProtein).textContent =
+        "/" + userMacros.protein;
+      // 3. set the width of the bars(value of the percentages from our currentTotals)
+      document.querySelector(DOMstrings.totalCalsBar).style.width =
+        curTotals.totalPercentages.caloriesBar + "%";
+      document.querySelector(DOMstrings.totalFatsBar).style.width =
+        curTotals.totalPercentages.fatsBar + "%";
+      document.querySelector(DOMstrings.totalCarbsBar).style.width =
+        curTotals.totalPercentages.carbsBar + "%";
+      document.querySelector(DOMstrings.totalProteinBar).style.width =
+        curTotals.totalPercentages.proteinBar + "%";
+      // 4. set the percentage text value for each total
+      document.querySelector(DOMstrings.totalCalsPercentage).textContent =
+        curTotals.totalPercentages.caloriesBar + "%";
+      document.querySelector(DOMstrings.totalFatsPercentage).textContent =
+        curTotals.totalPercentages.fatsBar + "%";
+      document.querySelector(DOMstrings.totalCarbsPercentage).textContent =
+        curTotals.totalPercentages.carbsBar + "%";
+      document.querySelector(DOMstrings.totalProteinPercentage).textContent =
+        curTotals.totalPercentages.proteinBar + "%";
     },
     getDOMstrings: function () {
       return DOMstrings;
@@ -152,20 +274,24 @@ var Controller = (function (FoodCtrl, UICtrl) {
     obj = UICtrl.getTotalInputs();
     // 2. validate these inputs and store them within the data object if valid (use if/else statement here)
     for (var i in obj) {
-      if (obj[i] === "" || isNaN(obj[i])) {
-        error = "All fields must be correctly filled (all numeric)";
+      if (obj[i] === "" || isNaN(obj[i]) || parseInt(obj[i]) <= 0) {
+        error =
+          "All fields must be correctly filled (all numeric and greater than 0)";
       }
     }
+
     if (error === "") {
+      // 3. add the user totals to the data structure
       FoodCtrl.setUserMacros(obj);
+      // 4. retrieve the updated object (including the total calories)
+      var userMacros = FoodCtrl.getTotalMacros();
+      // 5. Update the Macro Form VIA the UI to change the macro form into display values instead of input elements
+      UICtrl.displayUserMacros(userMacros);
+      // 6. initialize TOTALS section, placing the total macros/calories for each section (e.g. 0/2000)
+      updateSummary();
     } else {
-      console.log("looking good");
+      console.log(error);
     }
-    // 3. retrieve the updated object (including the total calories)
-    var userMacros = FoodCtrl.getTotalMacros();
-    // 4. Update the Macro Form VIA the UI to change the macro form into display values instead of input elements
-    UICtrl.displayUserMacros(userMacros);
-    // 5. initialize TOTALS section, placing the total macros/calories for each section (e.g. 0/2000)
   };
   // Add Food Item
   var ctrlAddFood = function () {
@@ -197,10 +323,18 @@ var Controller = (function (FoodCtrl, UICtrl) {
     // 4. Update the statistics
   };
   // Update Totals
-  var updateTotals = function () {
+  var updateSummary = function () {
+    // we will use updateOBJ to store the data we will need to use for updating our UI
+    var updateOBJ = {};
     // 1. calculate totals using our FoodController method by tallying up each category values for each item
-    // 2. get the totals from our Food Controller (first step was just to recalculate)
-    // 3. Update the UIController with our updated data
+    FoodCtrl.calculateCurrentTotals();
+    // 2. calculate the total percentages
+    FoodCtrl.calculateTotalPercentages();
+    // 3. get the totals from our Food Controller (macros and current)
+    updateOBJ.curTotals = FoodCtrl.getCurrentTotals();
+    updateOBJ.macros = FoodCtrl.getTotalMacros();
+    // 4. Update the UIController with our updated data
+    UIController.updateTotalTracker(updateOBJ);
   };
   // Update Statistics
   var updateStatistics = function () {
