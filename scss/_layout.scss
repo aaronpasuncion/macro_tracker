@@ -388,3 +388,19 @@ LAYOUT */
 .form__input--dark:focus {
   background: darken($dark-bg, 5);
 }
+
+/* KEYFRAMES */
+.anim-warning {
+  animation: warning 2.5s ease-in-out infinite;
+}
+@keyframes warning {
+  0% {
+    background: $red;
+  }
+  50% {
+    background: darken($red, 20);
+  }
+  100% {
+    background: $red;
+  }
+}
