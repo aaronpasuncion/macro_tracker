@@ -121,6 +121,9 @@ LAYOUT */
   margin-top: 0;
   font-weight: bold; }
 
+.food {
+  margin-top: 5rem; }
+
 .food__wrapper,
 .food__head,
 .food__intro {

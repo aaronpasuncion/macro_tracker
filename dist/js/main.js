@@ -214,6 +214,8 @@ var UIController = (function () {
     statProtein: ".statistics__item--cals",
     addFormSubmit: "#add-submit",
     foodWrapper: ".food__wrapper",
+    // date
+    date: ".info__date",
   };
 
   var summaryFractions = function (obj) {};
@@ -355,6 +357,13 @@ var UIController = (function () {
           ? "100%"
           : objPerentages.proteinPercent + "%";
     },
+    setDate: function () {
+      var todayDate = new Date();
+
+      document.querySelector(
+        DOMstrings.date
+      ).textContent = todayDate.toDateString();
+    },
     getDOMstrings: function () {
       return DOMstrings;
     },
@@ -489,6 +498,7 @@ var Controller = (function (FoodCtrl, UICtrl) {
     init: function () {
       var editState = false;
       console.log("app has started");
+      UICtrl.setDate();
       setupEventListeners();
     },
   };
