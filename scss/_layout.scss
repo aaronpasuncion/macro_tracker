@@ -162,7 +162,6 @@ LAYOUT */
 }
 
 .food__wrapper {
-  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -172,6 +171,7 @@ LAYOUT */
   width: 30%;
   height: 100%;
   margin-bottom: 2rem;
+  margin-right: 2rem;
   box-shadow: $shadow;
 }
 .food__item__wrapper {
