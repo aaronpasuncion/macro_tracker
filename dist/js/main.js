@@ -32,10 +32,10 @@ var FoodController = (function () {
     },
     foodItems: [],
     statistics: {
-      highestCals: 0,
-      highestFats: 0,
-      highestCarbs: 0,
-      highestprotein: 0,
+      highestCals: { name: "", value: 0 },
+      highestFats: { name: "", value: 0 },
+      highestCarbs: { name: "", value: 0 },
+      highestProtein: { name: "", value: 0 },
     },
   };
 
@@ -54,7 +54,6 @@ var FoodController = (function () {
       var totalCals;
       // 1. calculate the total calories first
       totalCals = totalCalories(obj);
-      console.log(totalCals);
       data.mainTotals.calories = totalCals;
       data.mainTotals.fats = obj.fats;
       data.mainTotals.carbs = obj.carbs;
@@ -72,7 +71,6 @@ var FoodController = (function () {
       var curTotals, foodArr;
       curTotals = data.currentTotals;
       foodArr = data.foodItems;
-      console.log(data.currentTotals.totalPercentages);
       if (foodArr.length !== 0) {
         // reset the current totals before recalculating
         curTotals.calories = 0;
@@ -107,8 +105,7 @@ var FoodController = (function () {
       );
       // add the new food item to the data structure
       foodItems.push(newFood);
-      console.log(newFood);
-      console.log(data.foodItems[0].calories);
+
       return newFood;
     },
     getCurrentTotals: function () {
@@ -134,7 +131,6 @@ var FoodController = (function () {
         percentages.proteinBar = Math.round(
           (curTotals.protein / mainMacros.protein) * 100
         );
-        console.log(percentages);
       } else {
         data.currentTotals.totalPercentages = {
           caloriesBar: 0,
@@ -154,6 +150,35 @@ var FoodController = (function () {
         carbsPercent: carbsPercentage,
         proteinPercent: proteinPercentage,
       };
+    },
+    calculateStatistics: function () {
+      var foodItems, stats;
+      foodItems = data.foodItems;
+      stats = data.statistics;
+      // loop through the food items, if the current value is greater than the current statistic, that food item will be set for that category
+      if (foodItems.length !== 0) {
+        foodItems.forEach(function (cur) {
+          if (cur.calories > stats.highestCals.value) {
+            stats.highestCals.name = cur.name;
+            stats.highestCals.value = cur.calories;
+          }
+          if (cur.fats > stats.highestFats.value) {
+            stats.highestFats.name = cur.name;
+            stats.highestFats.value = cur.fats;
+          }
+          if (cur.carbs > stats.highestCarbs.value) {
+            stats.highestCarbs.name = cur.name;
+            stats.highestCarbs.value = cur.carbs;
+          }
+          if (cur.protein > stats.highestProtein.value) {
+            stats.highestProtein.name = cur.name;
+            stats.highestProtein.value = cur.protein;
+          }
+        });
+      }
+    },
+    getStatistics: function () {
+      return data.statistics;
     },
     getCurrentTotals: function () {
       return data.currentTotals;
@@ -209,9 +234,9 @@ var UIController = (function () {
     statCarbsValue: ".statistics__value--cals",
     statProteinValue: ".statistics__value--cals",
     statCals: ".statistics__item--cals",
-    statFats: ".statistics__item--cals",
-    statCarbs: ".statistics__item--cals",
-    statProtein: ".statistics__item--cals",
+    statFats: ".statistics__item--fats",
+    statCarbs: ".statistics__item--carbs",
+    statProtein: ".statistics__item--protein",
     addFormSubmit: "#add-submit",
     foodWrapper: ".food__wrapper",
     // date
@@ -357,6 +382,28 @@ var UIController = (function () {
           ? "100%"
           : objPerentages.proteinPercent + "%";
     },
+    displayStatistics: function (stats) {
+      // set the calories
+      document.querySelector(DOMstrings.statCals).textContent =
+        stats.highestCals.name;
+      document.querySelector(DOMstrings.statCalsValue).textContent =
+        stats.highestCals.value + "g";
+      // set the fats
+      document.querySelector(DOMstrings.statFats).textContent =
+        stats.highestFats.name;
+      document.querySelector(DOMstrings.statFatsValue).textContent =
+        stats.highestFats.value + "g";
+      // set the carbs
+      document.querySelector(DOMstrings.statCarbs).textContent =
+        stats.highestCarbs.name;
+      document.querySelector(DOMstrings.statCarbsValue).textContent =
+        stats.highestCarbs.value + "g";
+      // set the proteins
+      document.querySelector(DOMstrings.statProtein).textContent =
+        stats.highestProtein.name;
+      document.querySelector(DOMstrings.statProteinValue).textContent =
+        stats.highestProtein.value + "g";
+    },
     setDate: function () {
       var todayDate = new Date();
 
@@ -421,7 +468,6 @@ var Controller = (function (FoodCtrl, UICtrl) {
     error = "";
     // 1. Retrieve the users form inputs via the add food item form
     newItem = UICtrl.getNewItemInput();
-    console.log(newItem);
     // 2. validate the inputs and store them within the data object if valid
     newItemNumbers = {
       fats: newItem.fats,
@@ -442,12 +488,12 @@ var Controller = (function (FoodCtrl, UICtrl) {
       addedItem = FoodCtrl.addFoodItem(newItem);
       // 4. calculate the percentages: send the addedItem to the FoodCtrl, calculate the percentage for each and return them as an object of percentages. pass this object along with te addedItem to the displayNewItem
       itemPercentages = FoodCtrl.calculateItemPercentages(addedItem);
-      console.log(itemPercentages);
       // 5. take the new item and add it to the UI
       UICtrl.displayNewItem(addedItem, itemPercentages);
       // 6. update the Totals section by adding each food specification from the item to each total
       updateSummary();
       // 7. update the statistcs if the item contains the highest value in one of the categories
+      updateStatistics();
     } else {
       console.log(error);
     }
@@ -489,9 +535,13 @@ var Controller = (function (FoodCtrl, UICtrl) {
   };
   // Update Statistics
   var updateStatistics = function () {
+    var statsObj;
     // 1. loop through the data structure via the FoodController and set the highest value per category
+    FoodCtrl.calculateStatistics();
     // 2. get the statistics calculate in step one and retrieve it in an object
+    statsObj = FoodCtrl.getStatistics();
     // 3. Update the UI to display the updated statistics
+    UICtrl.displayStatistics(statsObj);
   };
 
   return {
