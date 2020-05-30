@@ -392,6 +392,23 @@ LAYOUT */
   background: darken($dark-bg, 5);
 }
 
+// RESULT MESSAGES
+
+.message {
+  width: 100%;
+  text-align: center;
+  border-radius: $radius;
+  color: $white;
+  padding: 1rem;
+}
+.message--error {
+  background: $error;
+  border: 2px solid darken($error, 20);
+}
+.message--success {
+  background: $success;
+  border: 2px solid darken ($success, 20);
+}
 /* KEYFRAMES */
 .anim-warning {
   animation: warning 2.5s ease-in-out infinite;

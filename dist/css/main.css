@@ -316,6 +316,21 @@ LAYOUT */
 .form__input--dark:focus {
   background: #474747; }
 
+.message {
+  width: 100%;
+  text-align: center;
+  border-radius: 1.5625rem;
+  color: #fff;
+  padding: 1rem; }
+
+.message--error {
+  background: #f93d5c;
+  border: 2px solid #ca0626; }
+
+.message--success {
+  background: #01a982;
+  border: 2px solid darken #01a982, 20; }
+
 /* KEYFRAMES */
 .anim-warning {
   animation: warning 2.5s ease-in-out infinite; }

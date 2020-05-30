@@ -37,6 +37,7 @@ var FoodController = (function () {
       highestCarbs: { name: "", value: 0 },
       highestProtein: { name: "", value: 0 },
     },
+    error: "",
   };
 
   var totalCalories = function (obj) {
@@ -177,6 +178,13 @@ var FoodController = (function () {
         });
       }
     },
+    setError: function (error) {
+      // set the data structure error to the current error
+      data.error = error;
+    },
+    getError: function () {
+      return data.error;
+    },
     getStatistics: function () {
       return data.statistics;
     },
@@ -197,6 +205,7 @@ var UIController = (function () {
     inputTotalCarbs: ".form__input--carbs",
     inputTotalProtein: ".form__input--protein",
     inputTotalCals: ".form__input--protein",
+    totalsSubmitBtn: "#totals-submit",
     totalSummaryContainer: ".totals__wrapper",
     // current totals
     totalCurCals: ".totals__current-cals",
@@ -340,11 +349,58 @@ var UIController = (function () {
       document.querySelector(DOMstrings.totalProteinPercentage).textContent =
         curTotals.totalPercentages.proteinBar + "%";
       // 5. if the macro exceeds 100%, give it a warning class
+
+      // calories anim-warning validation
+      curTotals.totalPercentages.caloriesBar > 100
+        ? document
+            .querySelector(DOMstrings.totalCalsBar)
+            .classList.contains("anim-warning")
+          ? " "
+          : document
+              .querySelector(DOMstrings.totalCalsBar)
+              .classList.add("anim-warning")
+        : document
+            .querySelector(DOMstrings.totalCalsBar)
+            .classList.remove("anim-warning");
+
+      // fats anim-warning validation
+      curTotals.totalPercentages.fatsBar > 100
+        ? document
+            .querySelector(DOMstrings.totalFatsBar)
+            .classList.contains("anim-warning")
+          ? ""
+          : document
+              .querySelector(DOMstrings.totalFatsBar)
+              .classList.add("anim-warning")
+        : document
+            .querySelector(DOMstrings.totalFatsBar)
+            .classList.remove("anim-warning");
+
+      // carbs anim-warning validation
+      curTotals.totalPercentages.carbsBar > 100
+        ? document
+            .querySelector(DOMstrings.totalCarbsBar)
+            .classList.contains("anim-warning")
+          ? ""
+          : document
+              .querySelector(DOMstrings.totalCarbsBar)
+              .classList.add("anim-warning")
+        : document
+            .querySelector(DOMstrings.totalCarbsBar)
+            .classList.remove("anim-warning");
+
+      // protein anim-warning validation
       curTotals.totalPercentages.proteinBar > 100
         ? document
             .querySelector(DOMstrings.totalProteinBar)
-            .classList.toggle("anim-warning")
-        : "";
+            .classList.contains("anim-warning")
+          ? ""
+          : document
+              .querySelector(DOMstrings.totalProteinBar)
+              .classList.add("anim-warning")
+        : document
+            .querySelector(DOMstrings.totalProteinBar)
+            .classList.remove("anim-warning");
     },
     displayNewItem: function (obj, objPerentages) {
       var html, newHTML;
@@ -404,6 +460,30 @@ var UIController = (function () {
       document.querySelector(DOMstrings.statProteinValue).textContent =
         stats.highestProtein.value + "g";
     },
+    displayMessage: function (event, message, type) {
+      var parent, html;
+      parent = event.parentNode;
+      console.log(parent);
+      html = '<p class="message message--' + type + '">' + message + "</p>";
+      if (type === "error") {
+        // determine if there is an error message present on the page
+        // if there is an error message, remove it before applying the new message
+        if (document.querySelector(".message--error") !== null) {
+          document
+            .querySelector(".message--error")
+            .parentNode.removeChild(document.querySelector(".message--error"));
+        }
+      } else if (
+        type === "success" &&
+        document.querySelector(".message--error") !== null
+      ) {
+        document
+          .querySelector(".message--error")
+          .parentNode.removeChild(document.querySelector(".message--error"));
+      }
+      // add the error message above the form
+      parent.insertAdjacentHTML("beforebegin", html);
+    },
     setDate: function () {
       var todayDate = new Date();
 
@@ -418,26 +498,38 @@ var UIController = (function () {
 })();
 // Controller controller
 var Controller = (function (FoodCtrl, UICtrl) {
+  var macroSet = false;
   // event listeners stored within this function
   var setupEventListeners = function () {
-    var DOMobj = UICtrl.getDOMstrings();
+    var DOMobj;
+    DOMobj = UICtrl.getDOMstrings();
     document
       .querySelector(DOMobj.formTotalsContainer)
       .addEventListener("click", function (e) {
         var el;
         el = e.target;
         if (el.classList.contains("form-totals__submit")) {
-          ctrlStoreTotals();
+          ctrlStoreTotals(e);
         }
       });
 
     document
       .querySelector(DOMobj.addFormSubmit)
-      .addEventListener("click", ctrlAddFood);
+      .addEventListener("click", function (e) {
+        var error = "";
+        if (macroSet) {
+          ctrlAddFood(e);
+        } else {
+          error =
+            "ERROR: Please fill out your total macros before adding a food item.";
+          messageHandler(e.target, error, "error");
+        }
+      });
   };
   // Calculate User's total Calories/macros
-  var ctrlStoreTotals = function () {
-    var obj, error;
+  var ctrlStoreTotals = function (e) {
+    var obj, error, success, target;
+    target = e.target;
     error = "";
     // 1. Retrieve the users form inputs
     obj = UICtrl.getTotalInputs();
@@ -454,17 +546,24 @@ var Controller = (function (FoodCtrl, UICtrl) {
       FoodCtrl.setUserMacros(obj);
       // 4. retrieve the updated object (including the total calories)
       var userMacros = FoodCtrl.getTotalMacros();
-      // 5. Update the Macro Form VIA the UI to change the macro form into display values instead of input elements
+      // 5. Display a success messages letting the user know their macros have been saved
+      success =
+        "SUCCESS: Your personal macros have been successfully recorded. You may now track your food items";
+      messageHandler(target, success, "success");
+      // 6. Update the Macro Form VIA the UI to change the macro form into display values instead of input elements
       UICtrl.displayUserMacros(userMacros);
-      // 6. initialize TOTALS section, placing the total macros/calories for each section (e.g. 0/2000)
+      // 7. initialize TOTALS section, placing the total macros/calories for each section (e.g. 0/2000)
       updateSummary();
+      // 8. set the macroSet to true, indicating the user has entered their maros. this will allow them to add food items
+      macroSet = true;
     } else {
-      console.log(error);
+      messageHandler(target, error, "error");
     }
   };
   // Add Food Item
-  var ctrlAddFood = function () {
-    var newItem, newItemNumbers, error, addedItem, itemPercentages;
+  var ctrlAddFood = function (e) {
+    var newItem, newItemNumbers, error, addedItem, itemPercentages, target;
+    target = e.target;
     error = "";
     // 1. Retrieve the users form inputs via the add food item form
     newItem = UICtrl.getNewItemInput();
@@ -476,11 +575,11 @@ var Controller = (function (FoodCtrl, UICtrl) {
     };
     for (var i in newItemNumbers) {
       if (newItemNumbers[i] === "" || isNaN(newItemNumbers[i])) {
-        error = "All macro values must be numeric!";
+        error = "ERROR: Please fill in ALL macro information with numbers only";
       }
     }
     if (newItem.name === "") {
-      error += " Please fill out all fields";
+      error = " ERROR: Please provide a name for the food item";
     }
 
     if (error === "") {
@@ -495,7 +594,25 @@ var Controller = (function (FoodCtrl, UICtrl) {
       // 7. update the statistcs if the item contains the highest value in one of the categories
       updateStatistics();
     } else {
-      console.log(error);
+      messageHandler(target, error, "error");
+    }
+  };
+
+  // Error Handler: deals with any error results we retrieve from our event listeners and displays them
+  var messageHandler = function (event, message, type) {
+    var dataError;
+
+    if (type === "error") {
+      dataError = FoodCtrl.getError();
+
+      if (dataError === "" || dataError !== message) {
+        FoodCtrl.setError(message);
+        UICtrl.displayMessage(event, message, type);
+      } else {
+        console.log("same message");
+      }
+    } else if (type === "success") {
+      UICtrl.displayMessage(event, message, "success");
     }
   };
   // Delete Food Item
@@ -546,7 +663,6 @@ var Controller = (function (FoodCtrl, UICtrl) {
 
   return {
     init: function () {
-      var editState = false;
       console.log("app has started");
       UICtrl.setDate();
       setupEventListeners();
