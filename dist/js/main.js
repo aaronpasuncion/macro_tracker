@@ -197,6 +197,9 @@ var FoodController = (function () {
 var UIController = (function () {
   // DOMstring elements
   var DOMstrings = {
+    // modal
+    modalName: ".modal__name",
+    //
     userName: ".info__name",
     currentDate: ".info__date",
     progressStatus: ".info__status",
@@ -247,6 +250,7 @@ var UIController = (function () {
     statCarbs: ".statistics__item--carbs",
     statProtein: ".statistics__item--protein",
     addFormSubmit: "#add-submit",
+    editMacroBtn: "#edit-macros",
     foodWrapper: ".food__wrapper",
     // date
     date: ".info__date",
@@ -291,7 +295,7 @@ var UIController = (function () {
       var totalsForm, defaultHTML, displayHTML;
       totalsForm = document.querySelector(DOMstrings.formTotalsContainer);
       defaultHTML =
-        '<input type="text" class="form__input form__input--fats form__input--dark"  value="FATS: %fats%" readonly/> <input type="text" class="form__input form__input--carbs form__input--dark"  value="CARBS: %carbs%" readonly/> <input type="text" class="form__input form__input--protein form__input--dark" value="PROTEIN: %protein%" readonly/> <input type="text" class="form__input form__input--cals form__input--dark" readonly value="CALORIES: %calories%" /> <button class="form__submit form-totals__submit form__submit--dark" id="totals-submit" > + </button>';
+        '<input type="text" class="form__input form__input--fats form__input--dark"  value="FATS: %fats%" readonly/> <input type="text" class="form__input form__input--carbs form__input--dark"  value="CARBS: %carbs%" readonly/> <input type="text" class="form__input form__input--protein form__input--dark" value="PROTEIN: %protein%" readonly/> <input type="text" class="form__input form__input--cals form__input--dark" readonly value="CALORIES: %calories%" /><ion-icon class="edit-icon" name="cog-outline" id="edit-macros"></ion-icon>';
       displayHTML = defaultHTML.replace("%calories%", obj.calories);
       displayHTML = displayHTML.replace("%fats%", obj.fats);
       displayHTML = displayHTML.replace("%carbs%", obj.carbs);
@@ -402,6 +406,18 @@ var UIController = (function () {
             .querySelector(DOMstrings.totalProteinBar)
             .classList.remove("anim-warning");
     },
+    reEditMacros: function (event, obj) {
+      var html, displayHTML, totalsForm;
+      totalsForm = document.querySelector(DOMstrings.formTotalsContainer);
+      html =
+        '<input type="text" class="form__input form__input--fats form__input--dark"  value="%fats%" /> <input type="text" class="form__input form__input--carbs form__input--dark"  value="%carbs%" /> <input type="text" class="form__input form__input--protein form__input--dark" value="%protein%" /> <input type="text" class="form__input form__input--cals form__input--dark"  value="%calories%" />  <button class="form__submit form-totals__submit form__submit--dark" id="totals-submit">+</button> ';
+      displayHTML = html.replace("%calories%", obj.calories);
+      displayHTML = displayHTML.replace("%fats%", obj.fats);
+      displayHTML = displayHTML.replace("%carbs%", obj.carbs);
+      displayHTML = displayHTML.replace("%protein%", obj.protein);
+
+      totalsForm.innerHTML = displayHTML;
+    },
     displayNewItem: function (obj, objPerentages) {
       var html, newHTML;
       html =
@@ -509,7 +525,8 @@ var UIController = (function () {
 })();
 // Controller controller
 var Controller = (function (FoodCtrl, UICtrl) {
-  var macroSet = false;
+  var macroSet,
+    editState = false;
   // event listeners stored within this function
   var setupEventListeners = function () {
     var DOMobj;
@@ -521,6 +538,8 @@ var Controller = (function (FoodCtrl, UICtrl) {
         el = e.target;
         if (el.classList.contains("form-totals__submit")) {
           ctrlStoreTotals(e);
+        } else if (el.classList.contains("edit-icon")) {
+          editTotalMacros(el);
         }
       });
 
@@ -624,6 +643,17 @@ var Controller = (function (FoodCtrl, UICtrl) {
       UICtrl.displayMessage(event, message, "success");
     }
   };
+  // Edit total macros state: switches the state of the total macros form back to edittable
+  var editTotalMacros = function (event) {
+    var currentMacros;
+    // 1. retrieve the current values of the total macros via the food controller
+    currentMacros = FoodCtrl.getTotalMacros();
+    console.log(currentMacros);
+    // 2. access the UI via the event target and make the macro form edittable once again
+    UICtrl.reEditMacros(event, currentMacros);
+    // 3. set the editstate to true, which will disable any other form buttons to be submitted until the user finishes editting
+    editState = true;
+  };
   // Delete Food Item
   var ctrlDeleteFood = function (event) {
     // 1. retrieve the event target id where the delete button was clicked
@@ -672,6 +702,7 @@ var Controller = (function (FoodCtrl, UICtrl) {
 
   return {
     init: function () {
+      // UICtrl.setUserName();
       console.log("app has started");
       UICtrl.setDate();
       setupEventListeners();

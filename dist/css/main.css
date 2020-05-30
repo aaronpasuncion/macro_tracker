@@ -9,7 +9,8 @@ body {
   margin: 0 auto;
   width: 90%;
   max-width: 100%;
-  background: #fbfbfc; }
+  background: #fbfbfc;
+  overflow-x: hidden; }
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////
  TYPOGRAPHY
@@ -60,6 +61,7 @@ LAYOUT */
 .form__wrapper {
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   padding: 2rem;
   border-radius: 1.5625rem;
   background: #b3b3b3;
@@ -178,9 +180,26 @@ LAYOUT */
   height: 2rem;
   border-radius: 50%; }
 
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  z-index: 999; }
+
 /*///////////////////////////////////////////////////////////////////////////////////////////////////////// 
  END LAYOUT */
 /* COMPONENTS */
+.btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem; }
+
 .totals__bar,
 .food__bar {
   width: 100%;
@@ -194,9 +213,8 @@ LAYOUT */
 
 .totals__percentage,
 .food__percent {
-  background: #5cf298;
   height: 1rem;
-  width: 50%;
+  width: 0%;
   border-radius: 1.5625rem; }
 
 .food__percent {
@@ -270,6 +288,14 @@ LAYOUT */
     background: #46ee00;
     color: #545454; }
 
+ion-icon {
+  font-size: 2.5rem;
+  transition: 0.5s ease-out all;
+  color: #5cf298;
+  cursor: pointer; }
+  ion-icon:hover {
+    color: #0da84b; }
+
 .form__input {
   outline: none;
   padding: 1rem 0.5rem;
@@ -330,7 +356,11 @@ LAYOUT */
 
 .message--success {
   background: #01a982;
-  border: 2px solid darken #01a982, 20; }
+  border: 2px solid #004434; }
+
+.message--warning {
+  background: #997600;
+  border: 2px solid #664e00; }
 
 /* KEYFRAMES */
 .anim-warning {
