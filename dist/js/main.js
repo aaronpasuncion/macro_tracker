@@ -72,6 +72,7 @@ var FoodController = (function () {
       var curTotals, foodArr;
       curTotals = data.currentTotals;
       foodArr = data.foodItems;
+      console.log(foodArr.length);
       if (foodArr.length !== 0) {
         // reset the current totals before recalculating
         curTotals.calories = 0;
@@ -85,6 +86,11 @@ var FoodController = (function () {
           curTotals.carbs += cur.carbs;
           curTotals.protein += cur.protein;
         });
+      } else {
+        curTotals.calories = 0;
+        curTotals.fats = 0;
+        curTotals.carbs = 0;
+        curTotals.protein = 0;
       }
     },
     addFoodItem: function (newItem) {
@@ -108,6 +114,24 @@ var FoodController = (function () {
       foodItems.push(newFood);
 
       return newFood;
+    },
+    deleteFoodItem: function (id) {
+      var foodItems, index;
+      foodItems = data.foodItems;
+      // loop through food items to find the item with the matching id
+      foodItems.forEach(function (cur) {
+        if (cur.id === id) {
+          // set the index variable to the food item that has the same id as the id that was passed
+          index = foodItems.indexOf(cur);
+        }
+      });
+      // remove the item from the data.foodItems array
+      foodItems.splice(index, 1);
+
+      console.log(data.foodItems);
+    },
+    getFoodItems: function () {
+      return data.foodItems;
     },
     getCurrentTotals: function () {
       return data.currentTotals;
@@ -153,9 +177,13 @@ var FoodController = (function () {
       };
     },
     calculateStatistics: function () {
-      var foodItems, stats;
+      var foodItems, stats, allStatItems;
       foodItems = data.foodItems;
       stats = data.statistics;
+      for (var i in stats) {
+        stats[i].name = "N/A";
+        stats[i].value = 0;
+      }
       // loop through the food items, if the current value is greater than the current statistic, that food item will be set for that category
       if (foodItems.length !== 0) {
         foodItems.forEach(function (cur) {
@@ -224,6 +252,8 @@ var UIController = (function () {
     totalCarbsPercentage: ".totals__percent--carbs",
     totalProteinPercentage: ".totals__percent--protein",
     // Food item form inputs
+    foodWrapper: ".food__wrapper",
+    foodItem: ".food__item",
     addFoodContainer: ".form__add",
     foodName: ".form__add--food",
     foodFats: ".form__add--fats",
@@ -235,16 +265,17 @@ var UIController = (function () {
     proteinPercent: ".food__percent--protein",
     // statistics
     statCalsValue: ".statistics__value--cals",
-    statFatsValue: ".statistics__value--cals",
-    statCarbsValue: ".statistics__value--cals",
-    statProteinValue: ".statistics__value--cals",
+    statFatsValue: ".statistics__value--fats",
+    statCarbsValue: ".statistics__value--carbs",
+    statProteinValue: ".statistics__value--protein",
     statCals: ".statistics__item--cals",
     statFats: ".statistics__item--fats",
     statCarbs: ".statistics__item--carbs",
     statProtein: ".statistics__item--protein",
     addFormSubmit: "#add-submit",
+    // icons
     editMacroBtn: "#edit-macros",
-    foodWrapper: ".food__wrapper",
+    deleteFoodBtn: ".delete-icon",
     // date
     date: ".info__date",
   };
@@ -447,12 +478,22 @@ var UIController = (function () {
           ? "100%"
           : objPerentages.proteinPercent + "%";
     },
+    removeItem: function (item) {
+      var foodItem, parent;
+      // use the item that was passed as the id to locate the food item
+      foodItem = document.getElementById(item);
+      // define the parent of the food item (food wrapper)
+      parent = foodItem.parentNode;
+
+      // remove the foodItem
+      parent.removeChild(foodItem);
+    },
     displayStatistics: function (stats) {
       // set the calories
       document.querySelector(DOMstrings.statCals).textContent =
         stats.highestCals.name;
       document.querySelector(DOMstrings.statCalsValue).textContent =
-        stats.highestCals.value + "g";
+        stats.highestCals.value + " Cals";
       // set the fats
       document.querySelector(DOMstrings.statFats).textContent =
         stats.highestFats.name;
@@ -517,6 +558,7 @@ var Controller = (function (FoodCtrl, UICtrl) {
   var setupEventListeners = function () {
     var DOMobj;
     DOMobj = UICtrl.getDOMstrings();
+    // User Macros event listener
     document
       .querySelector(DOMobj.formTotalsContainer)
       .addEventListener("click", function (e) {
@@ -529,6 +571,7 @@ var Controller = (function (FoodCtrl, UICtrl) {
         }
       });
 
+    // Adding new food item event listener
     document
       .querySelector(DOMobj.addFormSubmit)
       .addEventListener("click", function (e) {
@@ -544,6 +587,15 @@ var Controller = (function (FoodCtrl, UICtrl) {
           error =
             "ERROR: Please fill out your total macros before adding a food item.";
           messageHandler(e.target, error, "error");
+        }
+      });
+
+    // delete food item event listener
+    document
+      .querySelector(DOMobj.foodWrapper)
+      .addEventListener("click", function (e) {
+        if (document.querySelector(DOMobj.foodItem) !== null) {
+          e.target.classList.contains("delete-icon") ? ctrlDeleteFood(e) : "";
         }
       });
   };
@@ -646,11 +698,20 @@ var Controller = (function (FoodCtrl, UICtrl) {
   };
   // Delete Food Item
   var ctrlDeleteFood = function (event) {
+    var item, splitItem, itemID;
     // 1. retrieve the event target id where the delete button was clicked
+    item = event.target.parentNode.id;
+    splitItem = item.split("-");
+    itemID = splitItem[1];
+    console.log(itemID);
     // 2. locate the ID of the food item within our data structure via the FoodController and delete it
+    FoodCtrl.deleteFoodItem(parseInt(itemID));
     // 3. update our UIController after we have deleted the item
+    UICtrl.removeItem(item);
     // 4. Update our totals
+    updateSummary();
     // 5. Update our statistics
+    updateStatistics();
   };
   // Edit Food Item
   var ctrlEditFood = function (event) {
