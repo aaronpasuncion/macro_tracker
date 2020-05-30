@@ -400,6 +400,7 @@ LAYOUT */
   border-radius: $radius;
   color: $white;
   padding: 1rem;
+  animation: fade-in 3s forwards ease-in-out;
 }
 .message--error {
   background: $error;
@@ -413,6 +414,9 @@ LAYOUT */
 .anim-warning {
   animation: warning 2.5s ease-in-out infinite;
 }
+.fade-out {
+  animation: fade-out 4s forwards ease-out;
+}
 @keyframes warning {
   0% {
     background: $red;
@@ -422,5 +426,22 @@ LAYOUT */
   }
   100% {
     background: $red;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

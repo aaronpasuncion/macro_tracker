@@ -471,6 +471,9 @@ var UIController = (function () {
         if (document.querySelector(".message--error") !== null) {
           document
             .querySelector(".message--error")
+            .classList.add("anim-fade-out");
+          document
+            .querySelector(".message--error")
             .parentNode.removeChild(document.querySelector(".message--error"));
         }
       } else if (
@@ -483,6 +486,14 @@ var UIController = (function () {
       }
       // add the error message above the form
       parent.insertAdjacentHTML("beforebegin", html);
+      // after the displaying the message, add a fade out animation
+      setTimeout(function () {
+        document.querySelector(".message").classList.add("fade-out");
+        // after the fade out, remove the message block
+        setTimeout(function () {
+          parent.parentNode.removeChild(document.querySelector(".message"));
+        }, 5000);
+      }, 5000);
     },
     setDate: function () {
       var todayDate = new Date();
@@ -608,8 +619,6 @@ var Controller = (function (FoodCtrl, UICtrl) {
       if (dataError === "" || dataError !== message) {
         FoodCtrl.setError(message);
         UICtrl.displayMessage(event, message, type);
-      } else {
-        console.log("same message");
       }
     } else if (type === "success") {
       UICtrl.displayMessage(event, message, "success");

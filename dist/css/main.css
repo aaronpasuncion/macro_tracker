@@ -321,7 +321,8 @@ LAYOUT */
   text-align: center;
   border-radius: 1.5625rem;
   color: #fff;
-  padding: 1rem; }
+  padding: 1rem;
+  animation: fade-in 3s forwards ease-in-out; }
 
 .message--error {
   background: #f93d5c;
@@ -335,6 +336,9 @@ LAYOUT */
 .anim-warning {
   animation: warning 2.5s ease-in-out infinite; }
 
+.fade-out {
+  animation: fade-out 4s forwards ease-out; }
+
 @keyframes warning {
   0% {
     background: #fe6262; }
@@ -342,3 +346,15 @@ LAYOUT */
     background: #f80202; }
   100% {
     background: #fe6262; } }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes fade-out {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
