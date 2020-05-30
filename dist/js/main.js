@@ -37,6 +37,7 @@ var FoodController = (function () {
       highestCarbs: { name: "", value: 0 },
       highestProtein: { name: "", value: 0 },
     },
+    status: "",
   };
 
   var totalCalories = function (obj) {
@@ -413,7 +414,7 @@ var UIController = (function () {
     displayNewItem: function (obj, objPerentages) {
       var html, newHTML;
       html =
-        '<div class="food__item" id="item-%id%"><div class="food__item__wrapper"><div class="food__head"><span class="food__theme food__theme--0"></span><div class="food__intro"><h2 class="food__title">%name%</h2><h3 class="food__cals">%calories% CALORIES</h3></div> </div> <div class="food__content"><div class="food__macro food__fats"><div class="food__info"><h4 class="food__category">FATS</h4><p class="food__value">%fats%</p></div><div class="food__percentage"><div class="food__bar"><div class="food__percent food__percent--fats"></div> </div> </div></div> <div class="food__macro food__carbs"> <div class="food__info"><h4 class="food__category">CARBS</h4><p class="food__value">%carbs%</p></div> <div class="food__percentage"><div class="food__bar"><div class="food__percent food__percent--carbs"></div> </div> </div> </div><div class="food__macro food__protein"><div class="food__info"><h4 class="food__category">PROTEIN</h4><p class="food__value">%protein%</p></div><div class="food__percentage"><div class="food__bar"><div class="food__percent food__percent--protein"></div></div></div></div></div></div></div>';
+        '<div class="food__item" id="item-%id%"><ion-icon class="delete-icon" name="close-circle-outline"></ion-icon><div class="food__item__wrapper"><div class="food__head"><div class="food__theme-box"><span class="food__theme food__theme--0"></div></span><div class="food__intro"><h2 class="food__title">%name%</h2><h3 class="food__cals">%calories% CALORIES</h3></div> </div> <div class="food__content"><div class="food__macro food__fats"><div class="food__info"><h4 class="food__category">FATS</h4><p class="food__value">%fats%g</p></div><div class="food__percentage"><div class="food__bar"><div class="food__percent food__percent--fats"></div> </div> </div></div> <div class="food__macro food__carbs"> <div class="food__info"><h4 class="food__category">CARBS</h4><p class="food__value">%carbs%g</p></div> <div class="food__percentage"><div class="food__bar"><div class="food__percent food__percent--carbs"></div> </div> </div> </div><div class="food__macro food__protein"><div class="food__info"><h4 class="food__category">PROTEIN</h4><p class="food__value">%protein%g</p></div><div class="food__percentage"><div class="food__bar"><div class="food__percent food__percent--protein"></div></div></div></div></div></div></div>';
       // replace all %..% values with actual item values
       newHTML = html.replace("%id%", obj.id);
       newHTML = newHTML.replace("%name%", obj.name);
