@@ -37,7 +37,6 @@ var FoodController = (function () {
       highestCarbs: { name: "", value: 0 },
       highestProtein: { name: "", value: 0 },
     },
-    error: "",
   };
 
   var totalCalories = function (obj) {
@@ -177,13 +176,6 @@ var FoodController = (function () {
           }
         });
       }
-    },
-    setError: function (error) {
-      // set the data structure error to the current error
-      data.error = error;
-    },
-    getError: function () {
-      return data.error;
     },
     getStatistics: function () {
       return data.statistics;
@@ -477,39 +469,32 @@ var UIController = (function () {
         stats.highestProtein.value + "g";
     },
     displayMessage: function (event, message, type) {
-      var parent, html;
+      var parent, html, currentMessage;
       parent = event.parentNode;
-      console.log(parent);
       html = '<p class="message message--' + type + '">' + message + "</p>";
-      if (type === "error") {
-        // determine if there is an error message present on the page
-        // if there is an error message, remove it before applying the new message
-        if (document.querySelector(".message--error") !== null) {
-          document
-            .querySelector(".message--error")
-            .classList.add("anim-fade-out");
-          document
-            .querySelector(".message--error")
-            .parentNode.removeChild(document.querySelector(".message--error"));
-        }
-      } else if (
-        type === "success" &&
-        document.querySelector(".message--error") !== null
-      ) {
-        document
-          .querySelector(".message--error")
-          .parentNode.removeChild(document.querySelector(".message--error"));
+
+      // determine if there is an existing message currently being displayed
+      if (document.querySelector(".message") !== null) {
+        // set the currentMessage to the message currently being displayed
+        currentMessage = document.querySelector(".message");
+        // remove the current messge
+        currentMessage.parentNode.removeChild(currentMessage);
       }
-      // add the error message above the form
-      parent.insertAdjacentHTML("beforebegin", html);
-      // after the displaying the message, add a fade out animation
-      setTimeout(function () {
-        document.querySelector(".message").classList.add("fade-out");
-        // after the fade out, remove the message block
+      if (type === "success") {
+        // add the error message above the form
+        parent.insertAdjacentHTML("beforebegin", html);
+        // after the displaying the message, add a fade out animation
         setTimeout(function () {
-          parent.parentNode.removeChild(document.querySelector(".message"));
+          document.querySelector(".message").classList.add("fade-out");
+          // after the fade out, remove the message block
+          setTimeout(function () {
+            document.querySelector(".message").style.display = "none";
+          }, 5000);
         }, 5000);
-      }, 5000);
+      } else {
+        // add the error message above the form
+        parent.insertAdjacentHTML("beforebegin", html);
+      }
     },
     setDate: function () {
       var todayDate = new Date();
@@ -546,9 +531,14 @@ var Controller = (function (FoodCtrl, UICtrl) {
     document
       .querySelector(DOMobj.addFormSubmit)
       .addEventListener("click", function (e) {
-        var error = "";
+        var error,
+          warning = "";
         if (macroSet) {
           ctrlAddFood(e);
+        } else if (editState) {
+          warning =
+            "WARNING: Please finish editting your total macros before adding a new item.";
+          messageHandler(e.target, warning, "warning");
         } else {
           error =
             "ERROR: Please fill out your total macros before adding a food item.";
@@ -586,6 +576,10 @@ var Controller = (function (FoodCtrl, UICtrl) {
       updateSummary();
       // 8. set the macroSet to true, indicating the user has entered their maros. this will allow them to add food items
       macroSet = true;
+      // 9. if editState is currently true, set back to false
+      if (editState) {
+        editState = false;
+      }
     } else {
       messageHandler(target, error, "error");
     }
@@ -631,27 +625,22 @@ var Controller = (function (FoodCtrl, UICtrl) {
   // Error Handler: deals with any error results we retrieve from our event listeners and displays them
   var messageHandler = function (event, message, type) {
     var dataError;
+    // call the display message function within our UI Controller
+    UICtrl.displayMessage(event, message, type);
 
-    if (type === "error") {
-      dataError = FoodCtrl.getError();
-
-      if (dataError === "" || dataError !== message) {
-        FoodCtrl.setError(message);
-        UICtrl.displayMessage(event, message, type);
-      }
-    } else if (type === "success") {
-      UICtrl.displayMessage(event, message, "success");
-    }
+    // }
   };
   // Edit total macros state: switches the state of the total macros form back to edittable
   var editTotalMacros = function (event) {
     var currentMacros;
-    // 1. retrieve the current values of the total macros via the food controller
+    // 1. set the macroSet to false since we are editting it
+    macroSet = false;
+    // 2. retrieve the current values of the total macros via the food controller
     currentMacros = FoodCtrl.getTotalMacros();
     console.log(currentMacros);
-    // 2. access the UI via the event target and make the macro form edittable once again
+    // 3. access the UI via the event target and make the macro form edittable once again
     UICtrl.reEditMacros(event, currentMacros);
-    // 3. set the editstate to true, which will disable any other form buttons to be submitted until the user finishes editting
+    // 4. set the editstate to true, which will disable any other form buttons to be submitted until the user finishes editting
     editState = true;
   };
   // Delete Food Item
