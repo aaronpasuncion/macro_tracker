@@ -5,318 +5,305 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Macro Tracker</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <h1 class="main-title">CALORIE & MACRO TRACKER</h1>
-    <!-- top content -->
-    <div class="dashboard">
-      <div class="dashboard__left">
-        <!-- info section -->
-        <div class="info">
-          <div class="info__box">
-            <h1 class="header">
-              NAME
-            </h1>
-            <div class="info__content">
-              <p class="info__name bold">
-                AARON ASUNCION
+    <!-- <p class="interface-message interface-message--error">Error, please fill out all required fields</p> -->
+    <!-- <h1 class="heading-primary">MACRO TRACKER</h1> -->
+    <main class="main-content">
+      <section class="welcome">
+        <div class="welcome__container">
+          <h2 class="heading-secondary welcome__intro">Macro Tracker</h2>
+          <div class="welcome__entry">
+            <div class="welcome__get-started">
+              <h2 class="heading-secondary underline welcome__header">Get Started</h2>
+              <p class="welcome__text text">
+                Enter your macro-nutrients to start tracking your macros.
+                Calories are calculated after you provide your fats, carbs, and
+                protein daily requirements (in grams).
               </p>
             </div>
-          </div>
-          <div class="info__box">
-            <h1 class="header">
-              DATE
-            </h1>
-            <div class="info__content">
-              <p class="info__date bold">
-                %TODAY'S DATE%
-              </p>
-            </div>
-          </div>
-          <div class="info__box">
-            <h1 class="header">
-              STATUS
-            </h1>
-            <div class="info__content">
-              <span class="info__status-colour"></span>
-              <p class="info__status bold">
-                ADD ITEMS!
-              </p>
+            <div class="form__wrapper form__totals">
+              <!-- <h2>CALORIES<p>%calories%</p></h2><h2>FATS:</h2><p>%fats%</p><h2>CARBS:</h2><p>%fats%</p><h2>PROTEIN:</h2><p>%protein%</p> -->
+              <div class="form__inputs">
+                <div class="form__group">
+                  <input
+                    type="text"
+                    name="total-fats"
+                    class="form__input form__input--fats"
+                    maxlength="3"
+                  />
+                  <label class="form__label" for="total-fats">Fats (g)</label>
+                </div>
+                <div class="form__group">
+                  <input
+                    type="text"
+                    name="total-carbs"
+                    class="form__input form__input--carbs"
+                    maxlength="3"
+                  />
+                  <label class="form__label" for="total-carbs">Carbs (g)</label>
+                </div>
+                <div class="form__group">
+                  <input
+                    type="text"
+                    name="total-protein"
+                    class="form__input form__input--protein"
+                    maxlength="3"
+                  />
+                  <label class="form__label" for="total-protein"
+                    >Protein (g)</label
+                  >
+                </div>
+                <div class="form__group">
+                  <input
+                    type="text"
+                    name="total-cals"
+                    class="form__input form__input--cals"
+                    readonly
+                  />
+                  <label class="form__label" for="total-cals">Calories</label>
+                </div>
+              </div>
+              <button
+                class="btn form__submit form__totals-submit u-bg-default"
+                id="totals-submit"
+              >
+                save macros
+              </button>
             </div>
           </div>
         </div>
-      </div>
-      <div class="dashboard__right">
-        <!-- total macros form -->
-        <div class="form">
-          <h1 class="header">MACROS</h1>
-          <div class="form__wrapper form__totals form__wrapper--dark">
-            <!-- <h2>CALORIES<p>%calories%</p></h2><h2>FATS:</h2><p>%fats%</p><h2>CARBS:</h2><p>%fats%</p><h2>PROTEIN:</h2><p>%protein%</p> -->
-            <input
-              type="text"
-              class="form__input form__input--fats form__input--dark"
-              placeholder="TOTALS FATS"
-            />
-            <input
-              type="text"
-              class="form__input form__input--carbs form__input--dark"
-              placeholder="TOTAL CARBS"
-            />
-            <input
-              type="text"
-              class="form__input form__input--protein form__input--dark"
-              placeholder="TOTAL PROTEIN"
-            />
-            <input
-              type="text"
-              class="form__input form__input--cals"
-              readonly
-              value="TOTAL CALORIES"
-            />
-            <button
-              class="form__submit form-totals__submit form__submit--dark"
-              id="totals-submit"
-            >
-              +
-            </button>
-          </div>
-        </div>
-        <!-- totals section -->
-        <div class="totals">
-          <h1 class="header">TOTALS</h1>
-          <div class="totals__wrapper">
-            <!--  total calories -->
-            <div class="totals__item">
-              <div class="totals__desc">
-                <h2 class="totals__title totals__title--cals">CALORIES</h2>
-                <span class="totals__ball totals__ball--cals"></span>
-                <p class="totals__progress totals__current-cals">0</p>
-                <span class="totals__total--cals">/0</span>
+      </section>
+      <!-- main dashboard section -->
+      <section class="dashboard">
+        <section class="food">
+          <h2 class="heading-secondary u-margin-bottom-sm">FOOD LOG</h2>
+          <div class="food__log">
+            <div class="food__log-wrapper">
+              <div class="food__new">
+                <button class="food__btn btn u-bg-default">Add Food</button>
               </div>
-              <div class="totals__bars">
-                <div class="totals__bar">
-                  <div
-                    class="totals__percentage totals__percentage--cals"
-                  ></div>
+              <!-- template -->
+              <!-- <div class="food__item" id="item-%id%">
+                <div class="food__preview">
+                  <h3 class="heading-tertiary food__title">%name%</h3>
+                  <p class="text food__cals">%calories% Cals</p>
+                  <div class="food__options">
+                    <button class="food__delete-btn">
+                      <svg class="delete-icon">
+                        <use
+                          xlink:href="img/sprite.svg#icon-remove_circle_outline"
+                        ></use>
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-                <p class="totals__percent--cals">0%</p>
-              </div>
+                <div class="food__details">
+                  <div class="food__macro-group">
+                    <h4 class="heading-sub food__macro-category">
+                      Fats<span class="food__val food__fats">%fats%g</span>
+                    </h4>
+                    <div class="food__bar">
+                      <span class="food__percent food__percent--fats"></span>
+                    </div>
+                  </div>
+                  <div class="food__macro-group">
+                    <h4 class="heading-sub food__macro-category">
+                      Carbs<span class="food__val food__carbs">%carbs%g</span>
+                    </h4>
+                    <div class="food__bar">
+                      <span class="food__percent food__percent--carbs"></span>
+                    </div>
+                  </div>
+                  <div class="food__macro-group">
+                    <h4 class="heading-sub food__macro-category">
+                      Protein<span class="food__val food__protein">%protein%g</span>
+                    </h4>
+                    <div class="food__bar">
+                      <span class="food__percent food__percent--protein"></span>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
             </div>
-            <!-- totals fats -->
-            <div class="totals__item">
-              <div class="totals__desc">
-                <h2 class="totals__title totals__title--fats">FATS</h2>
-                <span class="totals__ball totals__ball--fats"></span>
-                <p class="totals__progress totals__current-fats">0</p>
-                <span class="totals__total--fats">/0</span>
-              </div>
-              <div class="totals__bars">
-                <div class="totals__bar">
-                  <div
-                    class="totals__percentage totals__percentage--fats"
-                  ></div>
+
+            <!-- ADD FOOD ITEM -->
+            <div class="item-container">
+              <h3 class="heading-tertiary">ADD ITEM</h2>
+                <div class="form__add">
+                  <div class="form__group-item">
+                    <input
+                      type="text"
+                      class="form__input-item form__input-item--title u-border-default"
+                      placeholder="Food Name"
+                    />
+                  </div>
+                  <div class="form__group-item">
+                    <input
+                      type="text"
+                      class="form__input-item form__input-item--fats u-border-fats"
+                      maxlength="3"
+                      placeholder="Fats (g)"
+                    />
+                  </div>
+                  <div class="form__group-item">
+                    <input
+                      type="text"
+                      class="form__input-item form__input-item--carbs u-border-carbs"
+                      maxlength="3"
+                      placeholder="Carbs (g)"
+                    />
+                  </div>
+                  <div class="form__group-item">
+                    <input
+                      type="text"
+                      class="form__input-item form__input-item--protein u-border-protein"
+                      maxlength="3"
+                      placeholder="Protein (g)"
+                    />
+                  </div>
+                  <div class="form__group-item">
+                    <input
+                      type="text"
+                      class="form__input-item form__input-item--cals u-border-cals"
+                      placeholder="Calories (CALCULATED)"
+                      readonly
+                    />
+                  </div>
+                  <div class="form__group-item">
+                    <button class="btn u-bg-default form__save-item">ADD ITEM</button>
+                    <button class="btn u-bg-error form__item-cancel">CANCEL</button>
+                  </div>
                 </div>
-                <p class="totals__percent--fats">0%</p>
-              </div>
-            </div>
-            <!-- totals carbs -->
-            <div class="totals__item">
-              <div class="totals__desc">
-                <h2 class="totals__title totals__title--carbs">CARBS</h2>
-                <span class="totals__ball totals__ball--carbs"></span>
-                <p class="totals__progress totals__current-carbs">0</p>
-                <span class="totals__total--carbs">/0</span>
-              </div>
-              <div class="totals__bars">
-                <div class="totals__bar">
-                  <div
-                    class="totals__percentage totals__percentage--carbs"
-                  ></div>
-                </div>
-                <p class="totals__percent--carbs">0%</p>
-              </div>
-            </div>
-            <!-- totals proteins -->
-            <div class="totals__item">
-              <div class="totals__desc">
-                <h2 class="totals__title totals__title--protein">PROTEIN</h2>
-                <span class="totals__ball totals__ball--protein"></span>
-                <p class="totals__progress totals__current-protein">0</p>
-                <span class="totals__total--protein">/0</span>
-              </div>
-              <div class="totals__bars">
-                <div class="totals__bar">
-                  <div
-                    class="totals__percentage totals__percentage--protein"
-                  ></div>
-                </div>
-                <p class="totals__percent--protein">0%</p>
-              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <!-- bottom content -->
-    <div class="food-content">
-      <div class="food-content__left">
-        <!-- statistics -->
-        <div class="statistics">
-          <h1 class="header">STATISTICS</h1>
-          <div class="statistics__wrapper">
-            <div class="statistics__section">
-              <div class="statistics__info">
-                <h3 class="statistics__category">HIGHEST CALS</h3>
-                <p class="statistics__item statistics__item--cals">N/A</p>
+        </section>
+        <section class="overview">
+          <h2 class="heading-secondary u-margin-bottom-sm">OVERVIEW</h2>
+          <div class="overview__container">
+            <div class="overview__group">
+              <div class="overview__progress">
+                <h3 class="heading-tertiary">Calories</h3>
+                <p class="overview__percent-val overview__percent-val--cals">0%</p>
+                <p class="overview__current overview__current--cals">
+                  0/0
+                </p>
               </div>
-              <div class="statistics__box">
-                <h3 class="statistics__value statistics__value--cals">0</h3>
+              <div class="overview__bar">
+                <span class="overview__percent overview__percent--cals"></span>
               </div>
             </div>
-            <div class="statistics__section">
-              <div class="statistics__info">
-                <h3 class="statistics__category">HIGHEST FATS</h3>
-                <p class="statistics__item statistics__item--fats">N/A</p>
+            <div class="overview__group">
+              <div class="overview__progress">
+                <h3 class="heading-tertiary">Fats</h3>
+                <p class="overview__percent-val overview__percent-val--fats">0%</p>
+                <p class="overview__current overview__current--fats">
+                  0/0
+                </p>
               </div>
-              <div class="statistics__box">
-                <h3 class="statistics__value statistics__value--fats">0</h3>
-              </div>
-            </div>
-            <div class="statistics__section">
-              <div class="statistics__info">
-                <h3 class="statistics__category">HIGHEST CARBS</h3>
-                <p class="statistics__item statistics__item--carbs">N/A</p>
-              </div>
-              <div class="statistics__box">
-                <h3 class="statistics__value statistics__value--carbs">0</h3>
+              <div class="overview__bar">
+                <span class="overview__percent overview__percent--fats"></span>
               </div>
             </div>
-            <div class="statistics__section">
-              <div class="statistics__info">
-                <h3 class="statistics__category">HIGHEST PROTEIN</h3>
-                <p class="statistics__item statistics__item--protein">N/A</p>
+            <div class="overview__group">
+              <div class="overview__progress">
+                <h3 class="heading-tertiary">Carbs</h3>
+                <p class="overview__percent-val overview__percent-val--carbs">0%</p>
+                <p class="overview__current overview__current--carbs">
+                  0/0
+                </p>
               </div>
-              <div class="statistics__box">
-                <h3 class="statistics__value statistics__value--protein">
+              <div class="overview__bar">
+                <span class="overview__percent overview__percent--carbs"></span>
+              </div>
+            </div>
+            <div class="overview__group">
+              <div class="overview__progress">
+                <h3 class="heading-tertiary">Protein</h3>
+                <p class="overview__percent-val overview__percent-val--protein">0%</p>
+                <p class="overview__current overview__current--protein">
+                  0/0
+                </p>
+              </div>
+              <div class="overview__bar">
+                <span
+                  class="overview__percent overview__percent--protein"
+                ></span>
+              </div>
+            </div>
+            <div class="overview__button-group">
+              <button
+                class="overview__edit-macros btn-secondary u-border-default"
+              >
+                edit macros
+              </button>
+            </div>
+          </div>
+        </section>
+        <section class="analytics">
+          <h2 class="heading-secondary u-margin-bottom-sm">ANALYTICS</h2>
+
+          <div class="analytics__container">
+            <div class="analytics__box u-border-cals">
+              <div class="analytics__category u-bg-cals">
+                <h3 class="heading-tertiary">Most Cals</h3>
+              </div>
+              <div class="analytics__data">
+                <h3
+                  class="heading-tertiary analytics__value analytics__value--cals u-color-cals"
+                >
                   0
                 </h3>
+                <p class="text analytics__food--cals">N/A</p>
+              </div>
+            </div>
+            <div class="analytics__box u-border-fats">
+              <div class="analytics__category u-bg-fats">
+                <h3 class="heading-tertiary">Most Fats</h3>
+              </div>
+              <div class="analytics__data">
+                <h3
+                  class="heading-tertiary analytics__value analytics__value--fats u-color-fats"
+                >
+                  0
+                </h3>
+                <p class="text analytics__food--fats">N/A</p>
+              </div>
+            </div>
+            <div class="analytics__box u-border-carbs">
+              <div class="analytics__category u-bg-carbs">
+                <h3 class="heading-tertiary">Most Carbs</h3>
+              </div>
+              <div class="analytics__data">
+                <h3
+                  class="heading-tertiary analytics__value analytics__value--carbs u-color-carbs"
+                >
+                  0
+                </h3>
+                <p class="text analytics__food--carbs">N/A</p>
+              </div>
+            </div>
+            <div class="analytics__box u-border-protein">
+              <div class="analytics__category u-bg-protein">
+                <h3 class="heading-tertiary">Most Protein</h3>
+              </div>
+              <div class="analytics__data">
+                <h3
+                  class="heading-tertiary analytics__value analytics__value--protein u-color-protein"
+                >
+                  0
+                </h3>
+                <p class="text analytics__food--protein">N/A</p>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="food-content__right">
-        <!-- add food item -->
-        <!-- <p class="message message--error">
-          ERROR: You must set your total macros before entering an item
-        </p>
-        <p class="message message--success">
-          SUCCESS: Your food item has been added
-        </p> -->
-        <div class="form add">
-          <h1 class="header">ADD FOOD ITEM</h1>
-          <div class="form__wrapper form__add">
-            <input
-              type="text"
-              class="form__input form__add--food"
-              placeholder="ITEM NAME"
-            />
-            <input
-              type="text"
-              class="form__input form__add--fats"
-              placeholder="TOTALS FATS"
-            />
-            <input
-              type="text"
-              class="form__input form__add--carbs"
-              placeholder="TOTAL CARBS"
-            />
-            <input
-              type="text"
-              class="form__input form__add--protein"
-              placeholder="TOTAL PROTEIN"
-            />
-            <input
-              type="text"
-              class="form__input form__add--cals"
-              readonly
-              value="TOTAL CALORIES"
-            />
-            <button class="form__submit" id="add-submit">+</button>
-          </div>
-        </div>
-        <!-- FOOD LOG -->
-        <div class="food">
-          <h1 class="header">FOOD LOG</h1>
-          <div class="food__wrapper">
-            <!-- <div class="food__item" id="item-%id%">
-              <ion-icon class="delete-icon" name="close-circle-outline"></ion-icon>
-              <div class="food__item__wrapper">
-                <div class="food__head">
-                  <div class="food__theme-box">
-                    <span class="food__theme food__theme--0"></span>
-                  </div>
-                  <div class="food__intro">
-                    <h2 class="food__title">%name%</h2>
-                    <h3 class="food__cals">%calories% CALORIES</h3>
-                  </div>
-                </div>
-                <div class="food__content">
-                  <div class="food__macro food__fats">
-                    <div class="food__info">
-                      <h4 class="food__category">FATS</h4>
-                      <p class="food__value">%fats%</p>
-                    </div>
-                    <div class="food__percentage">
-                      <div class="food__bar">
-                        <div class="food__percent food__percent--fats"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="food__macro food__carbs">
-                    <div class="food__info">
-                      <h4 class="food__category">CARBS</h4>
-                      <p class="food__value">%carbs%</p>
-                    </div>
-                    <div class="food__percentage">
-                      <div class="food__bar">
-                        <div class="food__percent food__percent--carbs"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="food__macro food__protein">
-                    <div class="food__info">
-                      <h4 class="food__category">PROTEIN</h4>
-                      <p class="food__value">%protein%</p>
-                    </div>
-                    <div class="food__percentage">
-                      <div class="food__bar">
-                        <div class="food__percent food__percent--protein"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-          </div>
-        </div>
-      </div>
-
-      <!--  -->
-    </div>
-    <!-- <div class="modal modal__prompt">
-      <div class="modal__wrapper">
-        <h2>Welcome to the Calorie & Macro Tracker</h2>
-        <p>Please enter your name</p>
-        <input type="text" class="modal__input modal__name" />
-        <button class="btn btn__submit">Submit</button>
-      </div>
-    </div> -->
-    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+        </section>
+      </section>
+    </main>
     <script src="js/main.js"></script>
   </body>
 </html>

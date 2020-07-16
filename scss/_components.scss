@@ -1,0 +1,507 @@
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ WELCOME SECTION
+*/
+
+.welcome {
+  &__container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  &__intro {
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    animation: intro 1s 4s forwards, fade-out 1s 7s forwards;
+    transform: translate(-50%, 0%);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s transform;
+    backface-visibility: hidden;
+  }
+
+  &__entry {
+    width: 100%;
+    height: 100%;
+    animation: entry-scale-down 1s 8s;
+    animation-fill-mode: backwards;
+  }
+
+  &__get-started {
+    position: absolute;
+  }
+
+  &__text {
+    width: 40rem;
+  }
+}
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ FOOD SECTION
+*/
+
+.food {
+  // food log container
+  &__log {
+    @include box;
+
+    position: relative;
+    height: 35rem; //test
+    margin-bottom: 2rem;
+    padding: 3rem 2rem 0 2rem;
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__log-wrapper {
+    height: 100%;
+  }
+
+  // add new food item button
+  &__new {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  // general styling for food item box
+
+  &__item {
+    @include box;
+    padding: 1.5rem 2rem;
+    border: 2px solid $teal;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    transition: 0.2s all;
+
+    &:active {
+    }
+
+    &:hover .food__details,
+    &:focus .food__details {
+      opacity: 1;
+      height: 10rem;
+      visibility: visible;
+      margin-top: 1rem;
+    }
+
+    &:hover .food__options,
+    &:focus .food__options {
+      width: 1.5rem;
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  // food item name + calories
+
+  &__preview {
+    display: flex;
+    align-items: center;
+  }
+
+  &__options {
+    width: 0;
+    transition: 0.5s;
+    opacity: 0;
+    transform: translateX(0.25rem);
+  }
+
+  &__delete-btn {
+    @extend %btn;
+    background: transparent;
+    border: none;
+
+    &:hover .delete-icon {
+      fill: darken($error, 20);
+    }
+  }
+
+  &__cals {
+    margin: 0;
+    color: $cals;
+    margin-left: auto;
+  }
+
+  &__macro-group:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
+
+  // food item details on hover/focus
+  &__details {
+    opacity: 0;
+    height: 0;
+    visibility: hidden;
+    overflow: hidden;
+    transition: 0.3s height ease-out, opacity 0.2s 0.5s ease-in;
+  }
+
+  &__val {
+    opacity: 0.5;
+    font-size: 1rem;
+    margin-left: 0.25rem;
+  }
+
+  &__bar {
+    margin-top: 0.5rem;
+    width: 100%;
+    height: 1rem;
+    background: $primary;
+    border-radius: $border-radius;
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.25);
+  }
+
+  &__percent {
+    height: 100%;
+    display: inline-block;
+    transition: 0.5s all;
+    border-radius: $border-radius;
+
+    &--fats {
+      background: $fats;
+    }
+
+    &--carbs {
+      background: $carbs;
+    }
+
+    &--protein {
+      background: $protein;
+    }
+  }
+
+  &__new-btn {
+  }
+}
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ OVERVIEW
+*/
+
+.overview {
+  // overview container
+  &__container {
+    @include box;
+    padding: 3rem;
+  }
+  // Macro grouping
+  &__group {
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+  }
+
+  &__button-group {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
+  // top of macro grouping: name of category + current calories achieved
+  &__percent-val {
+    opacity: 0.5;
+    font-size: 0.9rem;
+    margin-left: auto;
+    margin-right: 0.5rem;
+  }
+
+  &__progress {
+    display: flex;
+    align-items: center;
+  }
+
+  // bottom of macro grouping: percentage bar
+  &__bar {
+    width: 100%;
+    height: 1.25rem;
+    background: $primary;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+  }
+
+  &__percent {
+    height: 100%;
+    transition: 0.5s all;
+    display: inline-block;
+    border-radius: $border-radius;
+
+    &--cals {
+      background: $cals;
+    }
+
+    &--fats {
+      background: $fats;
+    }
+
+    &--carbs {
+      background: $carbs;
+    }
+
+    &--protein {
+      background: $protein;
+    }
+  }
+}
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ ANALYTICS
+*/
+
+.analytics {
+  // analytics container
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  // analytics box for each category
+  &__box {
+    @include box;
+    overflow: hidden;
+    width: 12rem;
+    height: 15rem;
+    margin: 0 1rem 2rem 0;
+  }
+
+  // top section of box: analytics category
+  &__category {
+    text-align: center;
+    padding: 2rem;
+    color: $primary-light;
+    height: 45%;
+  }
+
+  // bottom section of the box: analytics data
+  &__data {
+    padding: 2rem;
+    scroll-padding-top: 0;
+    text-align: center;
+
+    .text {
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ FORMS
+*/
+
+.form {
+  &__totals {
+    background-color: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  // grouping for all the input elements
+  &__inputs {
+    display: flex;
+    margin-bottom: 3rem;
+  }
+
+  &__group:not(:last-child) {
+    margin-right: 5rem;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    align-items: center; // changed this due to the food item form. may have to modify for the total macros form
+  }
+
+  &__label {
+    margin-top: 1rem;
+  }
+
+  // actual input elements
+  &__input {
+    text-align: center;
+    font-family: inherit;
+    background: transparent;
+    font-size: 1.5rem;
+    padding: 1rem;
+    border-radius: $border-radius;
+    width: 7rem;
+    height: 7rem;
+    transition: 0.3s all;
+
+    &:focus {
+      outline: none;
+    }
+
+    &--fats:focus,
+    &--carbs:focus,
+    &--protein:focus {
+      border-bottom: 0.5rem solid currentColor;
+    }
+
+    &--cals {
+      border: 2px solid $cals;
+      color: $cals;
+    }
+
+    &--fats {
+      border: 2px solid $fats;
+      color: $fats;
+    }
+    &--carbs {
+      border: 2px solid $carbs;
+      color: $carbs;
+    }
+    &--protein {
+      border: 2px solid $protein;
+      color: $protein;
+    }
+  }
+
+  // ADD ITEM FORM
+  &__add {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  // grouping for add form
+  &__group-item {
+    width: 100%;
+    margin-bottom: 1.25rem;
+    &:first-child {
+      margin-top: 1rem;
+    }
+  }
+
+  &__input-item {
+    font-family: inherit;
+    border-radius: $border-radius;
+    background: transparent;
+    padding: 1rem;
+    color: $white;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+// food item form
+.item-container {
+  transform: translateX(120%);
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3rem 2rem 0 2rem;
+}
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ BUTTONS
+*/
+
+%btn {
+  font-family: inherit;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s all;
+  text-transform: uppercase;
+}
+
+.btn {
+  @extend %btn;
+  box-shadow: $shadow;
+  color: $white;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 0.9375rem;
+  padding: 1rem 2rem;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-secondary {
+  @extend %btn;
+  box-shadow: $shadow;
+  border-radius: $border-radius;
+  padding: 1rem 2rem;
+  color: $teal;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    color: $white;
+  }
+
+  &:active {
+    transform: translateY(0.25rem);
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+
+  &::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.2s all;
+    background-color: $teal;
+    height: 100%;
+    z-index: -1;
+    width: 0;
+  }
+}
+
+.delete-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  fill: $error;
+  transition: 0.2s all;
+}
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ INTERFACE MESSAGES
+*/
+%interface {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  padding: 1rem 2rem;
+  border-radius: $border-radius;
+  text-align: center;
+  transition: 0.2s opacity;
+  animation: fade-in 0.5s ease-in;
+  animation-fill-mode: backwards;
+  backface-visibility: hidden;
+}
+
+.interface-message {
+  @extend %interface;
+
+  &--error {
+    color: $error;
+    border: 2px solid $error;
+  }
+
+  &--success {
+    color: $success;
+    border: 2px solid $success;
+  }
+}

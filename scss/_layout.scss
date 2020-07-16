@@ -1,552 +1,63 @@
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 16px;
-  font-family: "Nunito", sans-serif;
-}
-
-body {
-  margin: 0 auto;
-  width: 90%;
-  max-width: 100%;
-  background: #fbfbfc;
-  overflow-x: hidden;
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ MAIN CONTENT CONTAINER
+*/
+.main-content {
+  height: 100%;
+  width: 100%;
 }
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////
- TYPOGRAPHY
+ WELCOME SECTION
 */
-
-.bold {
-  font-weight: bold;
-}
-
-/*///////////////////////////////////////////////////////////////////////////////////////////////////////// 
-LAYOUT */
-.main-title {
-  width: 100%;
-  text-align: center;
-}
-/* TOP CONTENT*/
-.dashboard,
-.food-content {
-  display: flex;
+.welcome {
+  @include box;
   height: 100%;
   width: 100%;
-  //   background: red;
+  padding: 3rem;
+  animation: welcome 2s 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  animation-fill-mode: backwards;
 }
 
-.dashboard__left,
-.dashboard__right,
-.food-content__left,
-.food-content__right {
-  height: 100%;
-}
-
-.dashboard__left,
-.food-content__left {
-  width: 25%;
-  margin-right: 2rem;
-}
-
-.dashboard__right,
-.food-content__right {
-  width: 75%;
-  margin-left: 2rem;
-}
-
-// info
-.info__box {
-  margin-bottom: 2rem;
-  width: 80%;
-}
-
-.info__content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: $white;
-  border-radius: $radius;
-  padding: 1rem;
-  box-shadow: $shadow;
-}
-
-// Macros & Add item
-
-.form__wrapper {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: $wrapper-padding;
-  border-radius: $radius;
-  background: darken($white, 30);
-  box-shadow: $shadow;
-}
-
-// totals
-
-.totals__wrapper {
-  background: $dark-bg;
-  border-radius: $radius;
-  color: $white;
-  padding: $wrapper-padding;
-  box-shadow: $shadow;
-}
-
-.totals__item,
-.totals__desc,
-.totals__bars {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.totals__desc,
-.totals__bars {
-  width: 50%;
-}
-
-// left side
-.totals__desc {
-  .totals__title {
-    width: 40%;
-  }
-  .totals__ball {
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
-    margin: 0 1rem;
-  }
-  .totals__progress {
-    opacity: 0.7;
-  }
-}
-
-/* BOTTOM CONTENT */
-.food-content {
-  margin-top: 5rem;
-  height: 100%;
-  min-height: 50vh;
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ DASHBOARD (MAIN CONTENT)
+*/
+.dashboard {
+  height: 90%;
   width: 100%;
-  //   background: lightblue;
-}
-
-// left side
-
-.statistics__wrapper {
-  background: $sub-dark-bg;
-  border-radius: $radius;
-  width: 100%;
-  padding: $wrapper-padding;
-  color: $white;
-  box-shadow: $shadow;
-}
-
-.statistics__section {
   display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-80%);
+
+  // &__wrapper {
+  //   height: 100%;
+  //   width: 100%;
+  //   display: flex;
+  //   align-items: flex-start;
+  //   justify-content: space-between;
+  // }
+}
+
+.food {
+  flex: 0 0 25%;
+
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
-.statistics__category {
-  margin-bottom: 0;
-}
-.statistics__item {
-  margin-top: 0;
-  font-weight: bold;
-  text-transform: capitalize;
-  font-size: 1.5rem;
-}
+.overview {
+  flex: 0 0 30%;
 
-//right side
-
-.food {
-  margin-top: 5rem;
-}
-.food__wrapper,
-.food__head,
-.food__intro {
   display: flex;
-}
-
-.food__wrapper {
-  flex-wrap: wrap;
-}
-
-.food__item {
-  position: relative;
-  background: $white;
-  border-radius: $radius;
-  width: 30%;
-  height: 100%;
-  margin-bottom: 2rem;
-  margin-right: 2rem;
-  box-shadow: $shadow;
-  transition: 0.5s all ease-out;
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
-    .delete-icon {
-      opacity: 1;
-      transform: translateX(-1rem);
-    }
-  }
-}
-.food__item__wrapper {
-  padding: $wrapper-padding;
-}
-
-.food__head {
-  align-items: center;
-}
-
-.food__intro {
   flex-direction: column;
-  align-items: flex-start;
-  width: 70%;
-}
-.food__title,
-.food__category {
-  margin-bottom: 0;
 }
 
-.food__cals,
-.food__value {
-  margin-top: 0;
-}
+.analytics {
+  flex: 0 0 30%;
 
-.food__macro {
   display: flex;
-  align-items: center;
-}
-
-.food__info {
-  width: 30%;
-}
-
-.food__percentage {
-  width: 70%;
-  display: flex;
-}
-
-.food__theme-box {
-  height: 100%;
-  width: 30%;
-}
-.food__theme {
-  display: inline-block;
-  text-align: left;
-  margin-right: 1rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-}
-
-// modals
-.modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.7);
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  z-index: 999;
-}
-
-// .modal__wrapper {
-//   background: $white;
-//   border-radius: $radius;
-//   width: 50vw;
-//   height: 25vh;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   h1 {
-//     margin-bottom: 0;
-//   }
-//   p {
-//     margin-top: 0;
-//   }
-//   .modal__input {
-//     padding: 0.5rem 1rem;
-//   }
-// }
-
-/*///////////////////////////////////////////////////////////////////////////////////////////////////////// 
- END LAYOUT */
-
-/* COMPONENTS */
-
-// btn
-
-.btn {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-}
-
-// status
-.info__status-colour {
-  width: 1.5rem;
-  height: 1.5rem;
-  background: $yellow;
-  border-radius: 50%;
-  margin-right: 1rem;
-  transition: 0.5s all ease-out;
-}
-
-// ion icons
-
-ion-icon {
-  font-size: 2.5rem;
-  transition: 0.5s ease-out all;
-  cursor: pointer;
-}
-
-.edit-icon {
-  color: $teal;
-  &:hover {
-    color: darken($teal, 30);
-  }
-}
-
-.delete-icon {
-  position: absolute;
-  top: 1rem;
-  right: 0rem;
-  opacity: 0;
-  color: $error;
-  &:hover {
-    color: darken($error, 30);
-  }
-}
-// bars
-
-.totals__bar,
-.food__bar {
-  width: 100%;
-  height: 1rem;
-  background: $white;
-  border-radius: $radius;
-  margin-right: 1rem;
-}
-
-.food__bar {
-  border: 2px solid $sub-dark-bg;
-}
-
-.totals__percentage,
-.food__percent {
-  height: 1rem;
-  width: 0%;
-  border-radius: $radius;
-}
-
-.food__percent {
-  height: 0.75rem;
-}
-
-// modifiers
-.totals__title--cals,
-.totals__total--cals,
-.totals__percent--cals,
-.statistics__item--cals,
-.statistics__value--cals,
-.food__cals {
-  color: $teal;
-}
-.totals__title--fats,
-.totals__total--fats,
-.totals__percent--fats,
-.statistics__item--fats,
-.statistics__value--fats,
-.food__percent--fats {
-  color: $red;
-}
-.totals__title--carbs,
-.totals__total--carbs,
-.totals__percent--carbs,
-.statistics__item--carbs,
-.statistics__value--carbs {
-  color: $yellow;
-}
-
-.totals__title--protein,
-.totals__total--protein,
-.totals__percent--protein,
-.statistics__item--protein,
-.statistics__value--protein {
-  color: $blue;
-}
-
-// backgrounds
-.totals__ball--cals,
-.totals__percentage--cals,
-.food__theme--0 {
-  background: $teal;
-}
-
-.totals__ball--fats,
-.totals__percentage--fats,
-.food__percent--fats,
-.food__theme--1 .info__status-colour--danger {
-  background: $red;
-}
-
-.totals__ball--carbs,
-.totals__percentage--carbs,
-.food__percent--carbs,
-.food__theme--2 {
-  background: $yellow;
-}
-
-.totals__ball--protein,
-.totals__percentage--protein,
-.food__percent--protein,
-.food__theme--3 {
-  background: $blue;
-}
-
-.info__status-colour--good {
-  background: $green;
-}
-
-/* FORMS */
-
-.form__submit {
-  cursor: pointer;
-  color: $green;
-  font-size: 2rem;
-  border-radius: 50%;
-  //   width: 2rem;
-  //   height: 2rem;
-  padding: 0.5rem 1rem;
-  border: 2px solid $green;
-  transition: 0.5s all ease-out;
-  background: none;
-  outline: 0;
-  &:hover {
-    background: $green;
-    color: $dark-bg;
-  }
-}
-
-.form__input {
-  outline: none;
-  padding: 1rem 0.5rem;
-  border-radius: $radius;
-  width: 10rem;
-  border: 2px solid;
-  text-align: center;
-  background: none;
-}
-
-.form__input:active,
-.form__input:focus {
-  background: lighten($white, 20);
-}
-
-// form modifiers
-
-.form__input--cals,
-.form__add--cals {
-  pointer-events: none;
-}
-.form__input--fats,
-.form__add--fats {
-  border-color: $red;
-}
-
-.form__input--carbs,
-.form__add--carbs {
-  border-color: $yellow;
-}
-
-.form__input--protein,
-.form__add--protein {
-  border-color: $blue;
-}
-
-.form__input--cals,
-.form__add--cals {
-  border: none;
-  color: $teal;
-  background: none;
-  font-weight: bold;
-}
-
-.form__wrapper--dark,
-.form__input--dark {
-  background: $dark-bg;
-}
-
-.form__input--dark {
-  color: $white;
-}
-
-.form__input--dark:focus {
-  background: darken($dark-bg, 5);
-}
-
-// RESULT MESSAGES
-
-.message {
-  width: 100%;
-  text-align: center;
-  border-radius: $radius;
-  color: $white;
-  padding: 1rem;
-  animation: fade-in 3s forwards ease-in-out;
-}
-.message--error {
-  background: $error;
-  border: 2px solid darken($error, 20);
-}
-.message--success {
-  background: $success;
-  border: 2px solid darken($success, 20);
-}
-
-.message--warning {
-  background: darken($yellow, 20);
-  border: 2px solid darken($yellow, 30);
-}
-/* KEYFRAMES */
-.anim-warning {
-  animation: warning 2.5s ease-in-out infinite;
-}
-.fade-out {
-  animation: fade-out 4s forwards ease-out;
-}
-@keyframes warning {
-  0% {
-    background: $red;
-  }
-  50% {
-    background: darken($red, 20);
-  }
-  100% {
-    background: $red;
-  }
-}
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  flex-direction: column;
 }
