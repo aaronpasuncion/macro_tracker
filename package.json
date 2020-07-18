@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "sass": "node-sass scss/main.scss  dist/css/main.css -w",
-    "compile:sass": "node-sass sass/main.scss css/style.comp.css",
-    "concat:css": "concat -o css/style.concat.css css/icon-font.css css/style.comp.css",
-    "prefix:css": "postcss --use autoprefixer -b \"last 10 versions\" css/style.comp.css -o css/style.prefix.css",
-    "compress:css": "node-sass css/style.prefix.css css/style.css --output-style compressed",
+    "compile:sass": "node-sass scss/main.scss dist/css/style.comp.css",
+    "prefix:css": "postcss --use autoprefixer -b \"last 10 versions\" dist/css/style.comp.css -o dist/css/style.prefix.css",
+    "compress:css": "node-sass dist/css/style.prefix.css dist/css/style.css --output-style compressed",
     "build:css": "npm-run-all compile:sass prefix:css compress:css"
   },
   "repository": {
@@ -43,5 +42,10 @@
     "node-sass": "^4.14.1",
     "npm-run-all": "^4.1.1",
     "postcss-cli": "^4.1.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   }
 }

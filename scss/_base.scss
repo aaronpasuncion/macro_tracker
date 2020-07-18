@@ -43,6 +43,52 @@ $success: #01a982;
 // RADIUS
 $border-radius: 10px;
 
+// MEDIA QUERY MANAGER
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + :      Big desktop
+
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+@mixin respond($breakpoint) {
+  @if $breakpoint == xs-phone {
+    @media only screen and (max-width: 31.25em) {
+      @content;
+    } //500px
+  }
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    } //600px
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 56.25em) {
+      @content;
+    } //900px
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    } //1200px
+  }
+  @if $breakpoint == big-desktop {
+    @media only screen and (min-width: 112.5em) {
+      @content;
+    } //1800
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -57,11 +103,39 @@ html {
 
 body {
   padding: 5rem 10rem 8rem 10rem;
-  background: $site-background;
+  background-image: $site-background;
+  background-attachment: fixed;
   color: $white;
-  max-height: 100vh;
-  height: 100vh;
+  min-height: 100%;
   overflow: hidden;
+
+  // 1615px
+  @media only screen and (max-width: 100.9375em) {
+    padding: 5rem 6rem;
+    overflow: auto;
+  }
+
+  // 1330px
+  @media only screen and (max-width: 83.125em) {
+    font-size: 87.5%;
+  }
+
+  // 1200px
+  @include respond(tab-land) {
+    padding: 5rem 2rem;
+  }
+
+  // 900px
+  @include respond(tab-port) {
+    padding: 5rem 2rem;
+    font-size: 75%;
+  }
+
+  // 600px
+  @include respond(phone) {
+    padding: 5rem 0;
+    font-size: 62.5%;
+  }
 }
 
 /////////////////////////////////////////////////////////////////
@@ -75,18 +149,44 @@ body {
   margin: 0;
 }
 
+.heading-primary,
+.heading-secondary,
+.heading-tertiary {
+  // phone
+  @include respond(tab-port) {
+    text-align: center;
+  }
+}
+
 .heading-primary {
   font-size: 3.375rem;
-  animation: main-title 1s 2s;
-  animation-fill-mode: backwards;
+
+  // 46px
+  @media only screen and (max-width: 100.9375em) {
+    font-size: 2.875rem;
+  }
+  // 40px
+  @include respond(tab-port) {
+    font-size: 2.5rem;
+  }
 }
 
 .heading-secondary {
   font-size: 2.25rem;
+
+  // 30px
+  @include respond(tab-land) {
+    font-size: 1.875rem;
+  }
 }
 
 .heading-tertiary {
   font-size: 1.5rem;
+
+  // 20px
+  @include respond(tab-land) {
+    font-size: 1.25rem;
+  }
 }
 
 .heading-sub {
@@ -190,6 +290,10 @@ body {
   animation-fill-mode: forwards !important;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 /////////////////////////////////////////////////////////////////
 // KEYFRAMES
 
@@ -213,17 +317,6 @@ body {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, -50%);
-  }
-}
-
-@keyframes welcome {
-  0% {
-    width: 0%;
-    padding: 0;
-  }
-  100% {
-    width: 100%;
-    padding: 3rem;
   }
 }
 
@@ -257,6 +350,19 @@ body {
   100% {
     opacity: 0;
     visibility: hidden;
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
   }
 }
 
@@ -296,7 +402,7 @@ body {
   100% {
     opacity: 1;
     visibility: visible;
-    transform: translateY(-100%);
+    transform: translateY(0);
   }
 }
 
@@ -304,12 +410,12 @@ body {
   0% {
     opacity: 1;
     visibility: visible;
-    transform: translateY(-100%);
+    transform: translateY(0);
   }
   100% {
     opacity: 0;
     visibility: hidden;
-    transform: translateY(0);
+    transform: translateY(80%);
   }
 }
 

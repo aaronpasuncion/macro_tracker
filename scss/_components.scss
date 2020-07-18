@@ -5,15 +5,14 @@
 .welcome {
   &__container {
     position: relative;
-    height: 100%;
-    width: 100%;
   }
   &__intro {
     text-transform: uppercase;
     position: absolute;
     top: 50%;
     left: 50%;
-    animation: intro 1s 4s forwards, fade-out 1s 7s forwards;
+    text-align: center;
+    animation: intro 1s 2s forwards, fade-out 1s 4s forwards;
     transform: translate(-50%, 0%);
     opacity: 0;
     visibility: hidden;
@@ -24,16 +23,30 @@
   &__entry {
     width: 100%;
     height: 100%;
-    animation: entry-scale-down 1s 8s;
+    animation: entry-scale-down 1s 6s;
     animation-fill-mode: backwards;
   }
 
   &__get-started {
-    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   &__text {
-    width: 40rem;
+    width: 60%;
+    text-align: center;
+
+    // 1200p[
+    @include respond(tab-land) {
+      width: 75%;
+    }
+
+    // 600px
+    @include respond(phone) {
+      width: 100%;
+    }
   }
 }
 
@@ -57,10 +70,18 @@
     &::-webkit-scrollbar {
       display: none;
     }
+
+    // 900px
+    @include respond(tab-port) {
+      padding: 3rem 6rem;
+    }
+    // 600px
+    @include respond(phone) {
+      padding: 3rem 2rem;
+    }
   }
 
   &__log-wrapper {
-    height: 100%;
   }
 
   // add new food item button
@@ -138,7 +159,8 @@
     height: 0;
     visibility: hidden;
     overflow: hidden;
-    transition: 0.3s height ease-out, opacity 0.2s 0.5s ease-in;
+    transition: 0.3s height ease-out, opacity 0.2s 0.5s ease-in,
+      visibility 0.2s 0.5s ease-in, margin-top 0.3s ease-in;
   }
 
   &__val {
@@ -159,7 +181,6 @@
   &__percent {
     height: 100%;
     display: inline-block;
-    transition: 0.5s all;
     border-radius: $border-radius;
 
     &--fats {
@@ -188,6 +209,16 @@
   &__container {
     @include box;
     padding: 3rem;
+
+    // 900px
+    @include respond(tab-port) {
+      padding: 3rem 6rem;
+    }
+
+    // 600px
+    @include respond(phone) {
+      padding: 3rem 2rem;
+    }
   }
   // Macro grouping
   &__group {
@@ -255,28 +286,56 @@
   &__container {
     display: flex;
     flex-wrap: wrap;
+
+    // 1330px
+    @media only screen and (max-width: 100.9375em) {
+      justify-content: space-between;
+    }
+
+    // 600px
+    @include respond(phone) {
+      flex-wrap: wrap;
+    }
   }
   // analytics box for each category
   &__box {
     @include box;
     overflow: hidden;
-    width: 12rem;
-    height: 15rem;
+    width: 11rem;
+    height: 14rem;
     margin: 0 1rem 2rem 0;
+
+    // 1615px
+    @media only screen and (max-width: 100.9375em) {
+      width: 14rem;
+      margin: 0;
+    }
+
+    // 1330px
+    @media only screen and (max-width: 83.125em) {
+      width: 8rem;
+      flex: 0 0 20%;
+      margin: 0;
+    }
+
+    // 600px
+    @include respond(tab-port) {
+      flex: 0 0 45%;
+      margin-bottom: 10%;
+    }
   }
 
   // top section of box: analytics category
   &__category {
     text-align: center;
-    padding: 2rem;
+    padding: 2rem 1rem;
     color: $primary-light;
     height: 45%;
   }
 
   // bottom section of the box: analytics data
   &__data {
-    padding: 2rem;
-    scroll-padding-top: 0;
+    padding: 2rem 1rem;
     text-align: center;
 
     .text {
@@ -291,12 +350,16 @@
 
 .form {
   &__totals {
-    background-color: inherit;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100%;
+    padding: 10rem 0rem;
+
+    // 600px
+    @include respond(phone) {
+      padding: 6rem 0;
+    }
   }
 
   // grouping for all the input elements
@@ -307,6 +370,15 @@
 
   &__group:not(:last-child) {
     margin-right: 5rem;
+    // 900px
+    @include respond(tab-port) {
+      margin-right: 2rem;
+    }
+
+    // 600px
+    @include respond(phone) {
+      margin-right: 1rem;
+    }
   }
 
   &__group {
@@ -330,6 +402,25 @@
     width: 7rem;
     height: 7rem;
     transition: 0.3s all;
+
+    // 900px
+    @include respond(tab-port) {
+      width: 6rem;
+      height: 6rem;
+    }
+    // 600px
+    @include respond(phone) {
+      width: 6rem;
+      height: 6rem;
+      font-size: 1rem;
+      padding: 0.5rem;
+    }
+
+    // 500px
+    @include respond(xs-phone) {
+      width: 4rem;
+      height: 4rem;
+    }
 
     &:focus {
       outline: none;
@@ -374,6 +465,11 @@
     &:first-child {
       margin-top: 1rem;
     }
+
+    // 900px
+    @include respond(tab-port) {
+      text-align: center;
+    }
   }
 
   &__input-item {
@@ -398,6 +494,28 @@
   top: 0;
   left: 0;
   padding: 3rem 2rem 0 2rem;
+
+  // 1200px
+  @media only screen and (max-width: 100.9375em) {
+    width: 100%;
+  }
+
+  // 900px
+  @include respond(tab-port) {
+    text-align: center;
+    padding: 3rem 4rem;
+  }
+  // 600px
+  @include respond(phone) {
+    padding: 3rem 2rem;
+  }
+
+  &__header {
+    // 900px
+    @include respond(tab-port) {
+      text-align: center;
+    }
+  }
 }
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -421,6 +539,11 @@
   border-radius: $border-radius;
   font-size: 0.9375rem;
   padding: 1rem 2rem;
+
+  // 500px
+  @include respond(xs-phone) {
+    font-size: 87.5%;
+  }
 
   &:hover {
     transform: translateY(-5px);
@@ -479,10 +602,10 @@
 */
 %interface {
   position: absolute;
-  top: 2rem;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;
+  width: 75%;
   padding: 1rem 2rem;
   border-radius: $border-radius;
   text-align: center;
@@ -490,13 +613,20 @@
   animation: fade-in 0.5s ease-in;
   animation-fill-mode: backwards;
   backface-visibility: hidden;
+
+  @include respond(phone) {
+    width: 90%;
+  }
 }
 
 .interface-message {
   @extend %interface;
 
   &--error {
-    color: $error;
+    position: fixed;
+    z-index: 1000;
+    color: $white;
+    background: $error;
     border: 2px solid $error;
   }
 

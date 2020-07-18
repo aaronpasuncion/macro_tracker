@@ -2,8 +2,7 @@
  MAIN CONTENT CONTAINER
 */
 .main-content {
-  height: 100%;
-  width: 100%;
+  position: relative;
 }
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,33 +10,37 @@
 */
 .welcome {
   @include box;
-  height: 100%;
-  width: 100%;
   padding: 3rem;
-  animation: welcome 2s 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  animation: scale-in 2s 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   animation-fill-mode: backwards;
 }
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////
  DASHBOARD (MAIN CONTENT)
 */
+
 .dashboard {
-  height: 90%;
   width: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-80%);
+  transform: translateY(80%);
+  position: absolute;
+  top: 3rem;
+  left: 0;
 
-  // &__wrapper {
-  //   height: 100%;
-  //   width: 100%;
-  //   display: flex;
-  //   align-items: flex-start;
-  //   justify-content: space-between;
-  // }
+  @media only screen and (max-width: 100.9375em) {
+    flex-wrap: wrap;
+  }
+
+  // 900px
+  @include respond(tab-port) {
+    section:not(:last-child) {
+      margin-bottom: 3rem;
+    }
+  }
 }
 
 .food {
@@ -46,6 +49,26 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  // 1615px
+  @media only screen and (max-width: 100.9375em) {
+    flex: 0 0 35%;
+  }
+
+  // 1200px
+  @include respond(tab-land) {
+    flex: 0 0 40%;
+  }
+
+  // 1000px
+  @media only screen and (max-width: 62.5em) {
+    flex: 0 0 45%;
+  }
+
+  // 900px
+  @include respond(tab-port) {
+    flex: 0 0 100%;
+  }
 }
 
 .overview {
@@ -53,6 +76,22 @@
 
   display: flex;
   flex-direction: column;
+
+  // 1615px
+  @media only screen and (max-width: 100.9375em) {
+    order: -1;
+    flex: 0 0 60%;
+  }
+
+  // 1200px
+  @include respond(tab-land) {
+    flex: 0 0 50%;
+  }
+
+  // 900px
+  @include respond(tab-port) {
+    flex: 0 0 100%;
+  }
 }
 
 .analytics {
@@ -60,4 +99,10 @@
 
   display: flex;
   flex-direction: column;
+
+  // 1330px
+  @media only screen and (max-width: 100.9375em) {
+    margin-top: 2rem;
+    flex: 0 0 100%;
+  }
 }
