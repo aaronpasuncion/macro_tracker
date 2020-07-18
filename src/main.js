@@ -41,6 +41,7 @@ var FoodController = (function () {
   };
 
   var calcTotalCals = function (fats, carbs, protein) {
+    var totalCals;
     totalCals = fats * 9 + carbs * 4 + protein * 4;
     return totalCals;
   };
@@ -336,11 +337,8 @@ var UIController = (function () {
       dashboard = document.querySelector(DOMstrings.dashboardContainer);
       bodyContainer = document.querySelector(DOMstrings.bodyContainer);
 
-      // remove the no-scroll class from the body container if applicable
-      if (bodyContainer.classList.contains("no-scroll")) {
-        console.log("scroll removed");
-        bodyContainer.classList.remove("no-scroll");
-      }
+      // remove display none style on dashboard
+      dashboard.style.display = "flex";
 
       // Hide the welcome container content, then fade out the welcome section completely
       welcomeContainer.style.animation = "fade-out 1s forwards";
@@ -378,18 +376,17 @@ var UIController = (function () {
       calsInput = document.querySelector(DOMstrings.inputTotalCals);
 
       // 1. Pass the current total macro data to the total macros form
-      fatsInput.textContent = currentMacros.fats;
-      carbsInput.textContent = currentMacros.carbs;
-      proteinInput.textContent = currentMacros.protein;
-      calsInput.textContent = currentMacros.calories;
+      fatsInput.value = currentMacros.fats;
+      carbsInput.value = currentMacros.carbs;
+      proteinInput.value = currentMacros.protein;
+      calsInput.value = currentMacros.calories;
       // 2. animate the sections
       // scroll to top of page and disable scroll
-      bodyContainer.classList.add("no-scroll");
-      window.scroll({
-        top: 0,
-        left: 0,
-        behavior: "smooth",
-      });
+      window.scrollTo(0, 0);
+
+      setTimeout(function () {
+        dashboard.style.display = "none";
+      }, 500);
 
       // change text of welcome form to edit text
       header.textContent = "Edit Macros";
@@ -419,7 +416,7 @@ var UIController = (function () {
       foodForm.style.animation = "item-container-slide-out 1s forwards";
       this.clearInputs();
 
-      if (document.querySelector(".interface-message--error") !== null) {
+      if (document.querySelector(".interface-message") !== null) {
         document.querySelector(".interface-message").style.animation =
           "fade-out 1s forwards";
         setTimeout(function () {
@@ -471,22 +468,18 @@ var UIController = (function () {
       document.querySelector(DOMstrings.proteinPercentVal).textContent =
         curTotals.totalPercentages.proteinBar + "%";
       // 5. if any of the macro categories are over the limit, animate percentage value with warning keyframe
-      if (curTotals.totalPercentages.caloriesBar > 100) {
-        document.querySelector(DOMstrings.calsPercentVal).style.animation =
-          "warning 3s infinite";
-      }
-      if (curTotals.totalPercentages.fatsBar > 100) {
-        document.querySelector(DOMstrings.fatsPercentVal).style.animation =
-          "warning 3s infinite";
-      }
-      if (curTotals.totalPercentages.carbsBar > 100) {
-        document.querySelector(DOMstrings.carbsPercentVal).style.animation =
-          "warning 3s infinite";
-      }
-      if (curTotals.totalPercentages.proteinBar > 100) {
-        document.querySelector(DOMstrings.proteinPercentVal).style.animation =
-          "warning 3s infinite";
-      }
+      document.querySelector(DOMstrings.calsPercentVal).style.animation =
+        curTotals.totalPercentages.caloriesBar > 100
+          ? "warning 3s infinite"
+          : "";
+      document.querySelector(DOMstrings.fatsPercentVal).style.animation =
+        curTotals.totalPercentages.fatsBar > 100 ? "warning 3s infinite" : "";
+      document.querySelector(DOMstrings.carbsPercentVal).style.animation =
+        curTotals.totalPercentages.carbsBar > 100 ? "warning 3s infinite" : "";
+      document.querySelector(DOMstrings.proteinPercentVal).style.animation =
+        curTotals.totalPercentages.proteinBar > 100
+          ? "warning 3s infinite"
+          : "";
     },
     displayNewItem: function (obj, objPerentages) {
       var html, newHTML, foodTitle;
@@ -588,7 +581,7 @@ var UIController = (function () {
       if (document.querySelector(".interface-message") !== null) {
         // set the currentMessage to the message currently being displayed
         currentMessage = document.querySelector(".interface-message");
-        if (currentMessage.textContent === message) {
+        if (currentMessage.textContent === message && type === "error") {
           sameMessage = true;
         } else {
           // remove the current messge
@@ -596,16 +589,17 @@ var UIController = (function () {
         }
       }
       if (type === "success" && sameMessage === false) {
+        // reset the animation
         // add the error message above the form
         parent.insertAdjacentHTML("afterbegin", html);
         // after the displaying the message, add a fade out animation
         document.querySelector(".interface-message").style.animation =
-          "fade-in 0.5s ease-in, fade-out 1s 4s ease-out forwards";
+          "fade-in 0.5s ease-in forwards, fade-out 1s 4s ease-out forwards";
       } else if (type === "error" && sameMessage === false) {
         // add the error message above the form
         parent.insertAdjacentHTML("afterbegin", html);
         document.querySelector(".interface-message").style.animation =
-          "fade-in 0.5s ease-in";
+          "fade-in 0.5s ease-in forwards";
       }
     },
     getDOMstrings: function () {
@@ -655,12 +649,21 @@ var Controller = (function (FoodCtrl, UICtrl) {
 
         if (
           curForm !== "" &&
+          curForm === document.querySelector(DOMobj.formTotalsContainer) &&
           totalFats !== "" &&
           totalFats !== "0" &&
           totalCarbs !== "" &&
           totalCarbs !== "0" &&
           totalProtein !== "" &&
           totalProtein !== "0"
+        ) {
+          ctrlDisplayTotalCals(totalFats, totalCarbs, totalProtein, totalCals);
+        } else if (
+          curForm !== "" &&
+          curForm === document.querySelector(DOMobj.addFoodForm) &&
+          totalFats !== "" &&
+          totalCarbs !== "" &&
+          totalProtein !== ""
         ) {
           ctrlDisplayTotalCals(totalFats, totalCarbs, totalProtein, totalCals);
         } else {
@@ -729,7 +732,7 @@ var Controller = (function (FoodCtrl, UICtrl) {
     // 2. validate these inputs and store them within the data object if valid (use if/else statement here)
     for (var i in obj) {
       if (obj[i] === "" || isNaN(obj[i]) || parseInt(obj[i]) <= 0) {
-        error = "All fields must be correctly filled and greater than 0";
+        error = "All fields must be numeric and greater than 0";
       }
     }
 
@@ -752,7 +755,13 @@ var Controller = (function (FoodCtrl, UICtrl) {
   };
   // Add Food Item
   var ctrlAddFood = function (e) {
-    var newItem, newItemNumbers, error, addedItem, itemPercentages, target;
+    var newItem,
+      newItemNumbers,
+      error,
+      addedItem,
+      itemPercentages,
+      target,
+      errorIsset;
     target = e.target;
     error = "";
     // 1. Retrieve the users form inputs via the add food item form
@@ -764,13 +773,17 @@ var Controller = (function (FoodCtrl, UICtrl) {
       protein: newItem.protein,
     };
 
+    if (newItem.name === "") {
+      error = "ERROR: Please provide a name for the food item";
+    }
+
     for (var i in newItemNumbers) {
-      if (newItemNumbers[i] === "" || isNaN(newItemNumbers[i])) {
+      if (error !== "") {
+        break;
+      } else if (newItemNumbers[i] === "" || isNaN(newItemNumbers[i])) {
+        // if error is not already set (the item name is missing)
         error = "ERROR: Macros (fats, carbs, protein) must be numeric!";
       }
-    }
-    if (newItem.name === "") {
-      error = " ERROR: Please provide a name for the food item";
     }
 
     if (error === "") {
@@ -799,6 +812,7 @@ var Controller = (function (FoodCtrl, UICtrl) {
 
   // Edit total macros state: switches the state of the total macros form back to edittable
   var ctrlEditTotalMacros = function () {
+    var currentMacros;
     // 1. retrieve the current values of the total macros via the food controller
     currentMacros = FoodCtrl.getTotalMacros();
     // 2. access the UI via the event target and make the macro form edittable once again
@@ -849,6 +863,13 @@ var Controller = (function (FoodCtrl, UICtrl) {
 
   return {
     init: function () {
+      // Scroll to top of page
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+
       // clear all input fields
       UICtrl.clearInputs();
       console.log("app has started");

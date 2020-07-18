@@ -153,9 +153,6 @@ body {
   animation: scale-out 1s 1s ease-out !important;
   animation-fill-mode: forwards !important; }
 
-.no-scroll {
-  overflow: hidden; }
-
 @keyframes main-title {
   0% {
     opacity: 0;
@@ -417,6 +414,7 @@ body {
   margin-bottom: 2rem;
   padding: 3rem 2rem 0 2rem;
   overflow-y: scroll;
+  overflow-x: hidden;
   -ms-overflow-style: none;
   /* IE and Edge */
   scrollbar-width: none;
@@ -443,13 +441,13 @@ body {
   cursor: pointer;
   transition: 0.2s all; }
   .food__item:hover .food__details,
-  .food__item:focus .food__details {
+  .food__item:active .food__details {
     opacity: 1;
     height: 10rem;
     visibility: visible;
     margin-top: 1rem; }
   .food__item:hover .food__options,
-  .food__item:focus .food__options {
+  .food__item:active .food__options {
     width: 1.5rem;
     opacity: 1;
     transform: translateX(0); }
@@ -463,6 +461,11 @@ body {
   transition: 0.5s;
   opacity: 0;
   transform: translateX(0.25rem); }
+  @media (hover: none) {
+    .food__options {
+      width: 1.5rem;
+      opacity: 1;
+      transform: translateX(0); } }
 
 .food__delete-btn {
   background: transparent;
@@ -484,6 +487,12 @@ body {
   visibility: hidden;
   overflow: hidden;
   transition: 0.3s height ease-out, opacity 0.2s 0.5s ease-in, visibility 0.2s 0.5s ease-in, margin-top 0.3s ease-in; }
+  @media (hover: none) {
+    .food__details {
+      opacity: 1;
+      height: 10rem;
+      visibility: visible;
+      margin-top: 1rem; } }
 
 .food__val {
   opacity: 0.5;
@@ -737,18 +746,18 @@ body {
   outline: none;
   cursor: pointer;
   transition: 0.2s all;
+  font-size: 0.9375rem;
   text-transform: uppercase; }
+  @media only screen and (max-width: 31.25em) {
+    .food__delete-btn, .btn, .btn-secondary {
+      font-size: 87.5%; } }
 
 .btn {
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
   color: #fff;
   border: none;
   border-radius: 10px;
-  font-size: 0.9375rem;
   padding: 1rem 2rem; }
-  @media only screen and (max-width: 31.25em) {
-    .btn {
-      font-size: 87.5%; } }
   .btn:hover {
     transform: translateY(-5px); }
   .btn:active {
@@ -798,9 +807,9 @@ body {
   padding: 1rem 2rem;
   border-radius: 10px;
   text-align: center;
+  opacity: 0;
+  visibility: hidden;
   transition: 0.2s opacity;
-  animation: fade-in 0.5s ease-in;
-  animation-fill-mode: backwards;
   backface-visibility: hidden; }
   @media only screen and (max-width: 37.5em) {
     .interface-message {
