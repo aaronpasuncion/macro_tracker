@@ -1,0 +1,827 @@
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + :      Big desktop
+
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+*,
+*::before,
+*::after {
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+  font-family: "Montserrat", sans-serif; }
+
+body {
+  padding: 5rem 10rem 8rem 10rem;
+  background-image: linear-gradient(to bottom right, #393e46, #23262b);
+  background-attachment: fixed;
+  color: #fff;
+  min-height: 100%;
+  overflow: hidden; }
+  @media only screen and (max-width: 100.9375em) {
+    body {
+      padding: 5rem 6rem;
+      overflow: auto; } }
+  @media only screen and (max-width: 83.125em) {
+    body {
+      font-size: 87.5%; } }
+  @media only screen and (max-width: 75em) {
+    body {
+      padding: 5rem 2rem; } }
+  @media only screen and (max-width: 56.25em) {
+    body {
+      padding: 5rem 2rem;
+      font-size: 75%; } }
+  @media only screen and (max-width: 37.5em) {
+    body {
+      padding: 5rem 0;
+      font-size: 62.5%; } }
+
+.heading-primary,
+.heading-secondary,
+.heading-tertiary,
+.heading-sub {
+  font-weight: 400;
+  margin: 0; }
+
+@media only screen and (max-width: 56.25em) {
+  .heading-primary,
+  .heading-secondary,
+  .heading-tertiary {
+    text-align: center; } }
+
+.heading-primary {
+  font-size: 3.375rem; }
+  @media only screen and (max-width: 100.9375em) {
+    .heading-primary {
+      font-size: 2.875rem; } }
+  @media only screen and (max-width: 56.25em) {
+    .heading-primary {
+      font-size: 2.5rem; } }
+
+.heading-secondary {
+  font-size: 2.25rem; }
+  @media only screen and (max-width: 75em) {
+    .heading-secondary {
+      font-size: 1.875rem; } }
+
+.heading-tertiary {
+  font-size: 1.5rem; }
+  @media only screen and (max-width: 75em) {
+    .heading-tertiary {
+      font-size: 1.25rem; } }
+
+.heading-sub {
+  font-size: 1.125rem; }
+
+.text {
+  font-weight: 500; }
+
+.u-margin-bottom-sm {
+  margin-bottom: 1rem; }
+
+.u-border-default {
+  border: 2px solid #4ecca3; }
+
+.u-bg-default {
+  background: #4ecca3; }
+
+.u-color-default {
+  color: #4ecca3; }
+
+.u-border-cals {
+  border: 2px solid #ffcd62; }
+
+.u-bg-cals {
+  background: #ffcd62; }
+
+.u-color-cals {
+  color: #ffcd62; }
+
+.u-border-fats {
+  border: 2px solid #f25d6f; }
+
+.u-bg-fats {
+  background: #f25d6f; }
+
+.u-color-fats {
+  color: #f25d6f; }
+
+.u-border-carbs {
+  border: 2px solid #fffd62; }
+
+.u-bg-carbs {
+  background: #fffd62; }
+
+.u-color-carbs {
+  color: #fffd62; }
+
+.u-border-protein {
+  border: 2px solid #5db8f2; }
+
+.u-bg-protein {
+  background: #5db8f2; }
+
+.u-color-protein {
+  color: #5db8f2; }
+
+.u-bg-error {
+  background: #f93d5c; }
+
+.underline {
+  display: inline-block;
+  border-bottom: 3px solid #4ecca3; }
+
+.fade-out {
+  animation: fade-out 1s forwards ease-out !important; }
+
+.scale-out {
+  animation: scale-out 1s 1s ease-out !important;
+  animation-fill-mode: forwards !important; }
+
+@keyframes main-title {
+  0% {
+    opacity: 0;
+    transform: translateX(30%); }
+  100% {
+    opacity: 1;
+    transform: translateX(0); } }
+
+@keyframes intro {
+  0% {
+    opacity: 0;
+    visibility: hidden; }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%); } }
+
+@keyframes entry-scale-down {
+  0% {
+    opacity: 0;
+    transform: scale(1.1); }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    visibility: hidden; }
+  100% {
+    opacity: 1;
+    visibility: visible; } }
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    visibility: visible; }
+  100% {
+    opacity: 0;
+    visibility: hidden; } }
+
+@keyframes scale-in {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95); }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1); } }
+
+@keyframes scale-out {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1); }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95); } }
+
+@keyframes total-macros-slide-in {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%); }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); } }
+
+@keyframes dash-slide-up {
+  0% {
+    opacity: 0;
+    visibility: hidden; }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); } }
+
+@keyframes dash-slide-down {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(80%); } }
+
+@keyframes warning {
+  0% {
+    color: #f93d5c; }
+  50% {
+    color: #fca0af; }
+  100% {
+    color: #f93d5c; } }
+
+@keyframes food-log-slide-in {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0; }
+  100% {
+    transform: translateX(0);
+    opacity: 1; } }
+
+@keyframes food-log-slide-out {
+  0% {
+    transform: translateX(0);
+    opacity: 1; }
+  100% {
+    transform: translateX(-120%);
+    opacity: 0; } }
+
+@keyframes item-container-slide-in {
+  0% {
+    transform: translateX(120%);
+    opacity: 0; }
+  100% {
+    transform: translateX(0);
+    opacity: 1; } }
+
+@keyframes item-container-slide-out {
+  0% {
+    transform: translateX(0);
+    opacity: 1; }
+  100% {
+    transform: translateX(120%);
+    opacity: 0; } }
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ MAIN CONTENT CONTAINER
+*/
+.main-content {
+  position: relative; }
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ WELCOME SECTION
+*/
+.welcome {
+  border-radius: 10px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  padding: 3rem;
+  animation: scale-in 2s 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  animation-fill-mode: backwards; }
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ DASHBOARD (MAIN CONTENT)
+*/
+.dashboard {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(80%);
+  position: absolute;
+  top: 3rem;
+  left: 0; }
+  @media only screen and (max-width: 100.9375em) {
+    .dashboard {
+      flex-wrap: wrap; } }
+  @media only screen and (max-width: 56.25em) {
+    .dashboard section:not(:last-child) {
+      margin-bottom: 3rem; } }
+
+.food {
+  flex: 0 0 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+  @media only screen and (max-width: 100.9375em) {
+    .food {
+      flex: 0 0 35%; } }
+  @media only screen and (max-width: 75em) {
+    .food {
+      flex: 0 0 40%; } }
+  @media only screen and (max-width: 62.5em) {
+    .food {
+      flex: 0 0 45%; } }
+  @media only screen and (max-width: 56.25em) {
+    .food {
+      flex: 0 0 100%; } }
+
+.overview {
+  flex: 0 0 30%;
+  display: flex;
+  flex-direction: column; }
+  @media only screen and (max-width: 100.9375em) {
+    .overview {
+      order: -1;
+      flex: 0 0 60%; } }
+  @media only screen and (max-width: 75em) {
+    .overview {
+      flex: 0 0 50%; } }
+  @media only screen and (max-width: 56.25em) {
+    .overview {
+      flex: 0 0 100%; } }
+
+.analytics {
+  flex: 0 0 30%;
+  display: flex;
+  flex-direction: column; }
+  @media only screen and (max-width: 100.9375em) {
+    .analytics {
+      margin-top: 2rem;
+      flex: 0 0 100%; } }
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ WELCOME SECTION
+*/
+.welcome__container {
+  position: relative; }
+
+.welcome__intro {
+  text-transform: uppercase;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  animation: intro 1s 2s forwards, fade-out 1s 4s forwards;
+  transform: translate(-50%, 0%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s transform;
+  backface-visibility: hidden; }
+
+.welcome__entry {
+  width: 100%;
+  height: 100%;
+  animation: entry-scale-down 1s 6s;
+  animation-fill-mode: backwards; }
+
+.welcome__get-started {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.welcome__text {
+  width: 60%;
+  text-align: center; }
+  @media only screen and (max-width: 75em) {
+    .welcome__text {
+      width: 75%; } }
+  @media only screen and (max-width: 37.5em) {
+    .welcome__text {
+      width: 100%; } }
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ FOOD SECTION
+*/
+.food__log {
+  border-radius: 10px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  position: relative;
+  height: 35rem;
+  margin-bottom: 2rem;
+  padding: 3rem 2rem 0 2rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */ }
+  .food__log::-webkit-scrollbar {
+    display: none; }
+  @media only screen and (max-width: 56.25em) {
+    .food__log {
+      padding: 3rem 6rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .food__log {
+      padding: 3rem 2rem; } }
+
+.food__new {
+  margin-bottom: 1rem;
+  text-align: center; }
+
+.food__item {
+  border-radius: 10px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  padding: 1.5rem 2rem;
+  border: 2px solid #4ecca3;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: 0.2s all; }
+  .food__item:hover .food__details,
+  .food__item:active .food__details {
+    opacity: 1;
+    height: 10rem;
+    visibility: visible;
+    margin-top: 1rem; }
+  .food__item:hover .food__options,
+  .food__item:active .food__options {
+    width: 1.5rem;
+    opacity: 1;
+    transform: translateX(0); }
+
+.food__preview {
+  display: flex;
+  align-items: center; }
+
+.food__options {
+  width: 0;
+  transition: 0.5s;
+  opacity: 0;
+  transform: translateX(0.25rem); }
+  @media (hover: none) {
+    .food__options {
+      width: 1.5rem;
+      opacity: 1;
+      transform: translateX(0); } }
+
+.food__delete-btn {
+  background: transparent;
+  border: none; }
+  .food__delete-btn:hover .delete-icon {
+    fill: #ca0626; }
+
+.food__cals {
+  margin: 0;
+  color: #ffcd62;
+  margin-left: auto; }
+
+.food__macro-group:not(:last-child) {
+  margin-bottom: 0.5rem; }
+
+.food__details {
+  opacity: 0;
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: 0.3s height ease-out, opacity 0.2s 0.5s ease-in, visibility 0.2s 0.5s ease-in, margin-top 0.3s ease-in; }
+  @media (hover: none) {
+    .food__details {
+      opacity: 1;
+      height: 10rem;
+      visibility: visible;
+      margin-top: 1rem; } }
+
+.food__val {
+  opacity: 0.5;
+  font-size: 1rem;
+  margin-left: 0.25rem; }
+
+.food__bar {
+  margin-top: 0.5rem;
+  width: 100%;
+  height: 1rem;
+  background: #232931;
+  border-radius: 10px;
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.25); }
+
+.food__percent {
+  height: 100%;
+  display: inline-block;
+  border-radius: 10px; }
+  .food__percent--fats {
+    background: #f25d6f; }
+  .food__percent--carbs {
+    background: #fffd62; }
+  .food__percent--protein {
+    background: #5db8f2; }
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ OVERVIEW
+*/
+.overview__container {
+  border-radius: 10px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  padding: 3rem; }
+  @media only screen and (max-width: 56.25em) {
+    .overview__container {
+      padding: 3rem 6rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .overview__container {
+      padding: 3rem 2rem; } }
+
+.overview__group {
+  margin-bottom: 2rem;
+  padding: 0 1rem; }
+
+.overview__button-group {
+  margin-top: 4rem;
+  text-align: center; }
+
+.overview__percent-val {
+  opacity: 0.5;
+  font-size: 0.9rem;
+  margin-left: auto;
+  margin-right: 0.5rem; }
+
+.overview__progress {
+  display: flex;
+  align-items: center; }
+
+.overview__bar {
+  width: 100%;
+  height: 1.25rem;
+  background: #232931;
+  border-radius: 10px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
+.overview__percent {
+  height: 100%;
+  transition: 0.5s all;
+  display: inline-block;
+  border-radius: 10px; }
+  .overview__percent--cals {
+    background: #ffcd62; }
+  .overview__percent--fats {
+    background: #f25d6f; }
+  .overview__percent--carbs {
+    background: #fffd62; }
+  .overview__percent--protein {
+    background: #5db8f2; }
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ ANALYTICS
+*/
+.analytics__container {
+  display: flex;
+  flex-wrap: wrap; }
+  @media only screen and (max-width: 100.9375em) {
+    .analytics__container {
+      justify-content: space-between; } }
+  @media only screen and (max-width: 37.5em) {
+    .analytics__container {
+      flex-wrap: wrap; } }
+
+.analytics__box {
+  border-radius: 10px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+  width: 11rem;
+  height: 14rem;
+  margin: 0 1rem 2rem 0; }
+  @media only screen and (max-width: 100.9375em) {
+    .analytics__box {
+      width: 14rem;
+      margin: 0; } }
+  @media only screen and (max-width: 83.125em) {
+    .analytics__box {
+      width: 8rem;
+      flex: 0 0 20%;
+      margin: 0; } }
+  @media only screen and (max-width: 56.25em) {
+    .analytics__box {
+      flex: 0 0 45%;
+      margin-bottom: 10%; } }
+
+.analytics__category {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #393e46;
+  height: 45%; }
+
+.analytics__data {
+  padding: 2rem 1rem;
+  text-align: center; }
+  .analytics__data .text {
+    margin-top: 0.5rem; }
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ FORMS
+*/
+.form__totals {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10rem 0rem; }
+  @media only screen and (max-width: 37.5em) {
+    .form__totals {
+      padding: 6rem 0; } }
+
+.form__inputs {
+  display: flex;
+  margin-bottom: 3rem; }
+
+.form__group:not(:last-child) {
+  margin-right: 5rem; }
+  @media only screen and (max-width: 56.25em) {
+    .form__group:not(:last-child) {
+      margin-right: 2rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .form__group:not(:last-child) {
+      margin-right: 1rem; } }
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.form__label {
+  margin-top: 1rem; }
+
+.form__input {
+  text-align: center;
+  font-family: inherit;
+  background: transparent;
+  font-size: 1.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 7rem;
+  height: 7rem;
+  transition: 0.3s all; }
+  @media only screen and (max-width: 56.25em) {
+    .form__input {
+      width: 6rem;
+      height: 6rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .form__input {
+      width: 6rem;
+      height: 6rem;
+      font-size: 1rem;
+      padding: 0.5rem; } }
+  @media only screen and (max-width: 31.25em) {
+    .form__input {
+      width: 4rem;
+      height: 4rem; } }
+  .form__input:focus {
+    outline: none; }
+  .form__input--fats:focus, .form__input--carbs:focus, .form__input--protein:focus {
+    border-bottom: 0.5rem solid currentColor; }
+  .form__input--cals {
+    border: 2px solid #ffcd62;
+    color: #ffcd62; }
+  .form__input--fats {
+    border: 2px solid #f25d6f;
+    color: #f25d6f; }
+  .form__input--carbs {
+    border: 2px solid #fffd62;
+    color: #fffd62; }
+  .form__input--protein {
+    border: 2px solid #5db8f2;
+    color: #5db8f2; }
+
+.form__add {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; }
+
+.form__group-item {
+  width: 100%;
+  margin-bottom: 1.25rem; }
+  .form__group-item:first-child {
+    margin-top: 1rem; }
+  @media only screen and (max-width: 56.25em) {
+    .form__group-item {
+      text-align: center; } }
+
+.form__input-item {
+  font-family: inherit;
+  border-radius: 10px;
+  background: transparent;
+  padding: 1rem;
+  color: #fff;
+  width: 100%; }
+  .form__input-item:focus {
+    outline: none; }
+
+.item-container {
+  transform: translateX(120%);
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3rem 2rem 0 2rem; }
+  @media only screen and (max-width: 100.9375em) {
+    .item-container {
+      width: 100%; } }
+  @media only screen and (max-width: 56.25em) {
+    .item-container {
+      text-align: center;
+      padding: 3rem 4rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .item-container {
+      padding: 3rem 2rem; } }
+  @media only screen and (max-width: 56.25em) {
+    .item-container__header {
+      text-align: center; } }
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ BUTTONS
+*/
+.food__delete-btn, .btn, .btn-secondary {
+  font-family: inherit;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s all;
+  font-size: 0.9375rem;
+  text-transform: uppercase; }
+  @media only screen and (max-width: 31.25em) {
+    .food__delete-btn, .btn, .btn-secondary {
+      font-size: 87.5%; } }
+
+.btn {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 1rem 2rem; }
+  .btn:hover {
+    transform: translateY(-5px); }
+  .btn:active {
+    transform: translateY(0); }
+
+.btn-secondary {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  color: #4ecca3;
+  background: transparent;
+  position: relative;
+  overflow: hidden; }
+  .btn-secondary:hover {
+    color: #fff; }
+  .btn-secondary:active {
+    transform: translateY(0.25rem); }
+  .btn-secondary:hover::after {
+    width: 100%; }
+  .btn-secondary::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.2s all;
+    background-color: #4ecca3;
+    height: 100%;
+    z-index: -1;
+    width: 0; }
+
+.delete-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  fill: #f93d5c;
+  transition: 0.2s all; }
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ INTERFACE MESSAGES
+*/
+.interface-message {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s opacity;
+  backface-visibility: hidden; }
+  @media only screen and (max-width: 37.5em) {
+    .interface-message {
+      width: 90%; } }
+
+.interface-message--error {
+  position: fixed;
+  z-index: 1000;
+  color: #fff;
+  background: #f93d5c;
+  border: 2px solid #f93d5c; }
+
+.interface-message--success {
+  color: #01a982;
+  border: 2px solid #01a982; }
